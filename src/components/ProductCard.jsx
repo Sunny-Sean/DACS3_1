@@ -10,6 +10,7 @@ import {
 import { COLORS, FONTFAMILY } from "../constants/theme2";
 import { AntDesign } from "@expo/vector-icons";
 import BGIcon from "./BGIcon";
+import { Link, useSegments } from "expo-router";
 
 const CARD_WIDTH = Dimensions.get("window").width * 0.32;
 
@@ -25,41 +26,46 @@ function ProductCard({
   price,
   buttonPressHandler,
 }) {
+  const segment = useSegments();
+  // console.log(segment);
+
   return (
-    <LinearGradient
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.CardLinearGradientContainer}
-      colors={["#f5dab5", "#b39c7f"]}
-    >
-      <ImageBackground
-        resizeMode="cover"
-        style={styles.CardImageBG}
-        source={imagelink_square}
-        // source={{ uri: imagelink_square }}
+    <Link href={`/${segment[0]}/menu/${id}`}>
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.CardLinearGradientContainer}
+        colors={["#f5dab5", "#b39c7f"]}
       >
-        <View style={styles.CardRatingContainer}>
-          <AntDesign name="star" size={16} color={"#230C02"} />
-          <Text style={styles.CardRatingText}>{average_rating}</Text>
+        <ImageBackground
+          resizeMode="cover"
+          style={styles.CardImageBG}
+          source={imagelink_square}
+          // source={{ uri: imagelink_square }}
+        >
+          <View style={styles.CardRatingContainer}>
+            <AntDesign name="star" size={16} color={"#230C02"} />
+            <Text style={styles.CardRatingText}>{average_rating}</Text>
+          </View>
+        </ImageBackground>
+        <Text style={styles.CardTitle}>{name}</Text>
+        <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
+        <View style={styles.CardFooterRow}>
+          <Text style={styles.CardPriceCurrency}>
+            $<Text style={styles.CartPrice}>{price}</Text>
+          </Text>
+          <TouchableOpacity onPress={() => {}}>
+            <BGIcon
+              color={COLORS.primaryWhiteHex}
+              name="add"
+              // BGColor={COLORS.primaryOrangeHex}
+              BGColor="#693a27"
+              size={10}
+            />
+          </TouchableOpacity>
         </View>
-      </ImageBackground>
-      <Text style={styles.CardTitle}>{name}</Text>
-      <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
-      <View style={styles.CardFooterRow}>
-        <Text style={styles.CardPriceCurrency}>
-          $<Text style={styles.CartPrice}>{price}</Text>
-        </Text>
-        <TouchableOpacity onPress={() => {}}>
-          <BGIcon
-            color={COLORS.primaryWhiteHex}
-            name="add"
-            // BGColor={COLORS.primaryOrangeHex}
-            BGColor="#693a27"
-            size={10}
-          />
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </Link>
   );
 }
 

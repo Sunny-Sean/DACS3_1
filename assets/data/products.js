@@ -2,10 +2,12 @@ const products = [
   {
     id: 1,
     name: "Pizza",
-    image:
-      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png",
+    // image:
+    //   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png",
+    image2: require("../../food_image/ext.png"),
     price: 12.99,
-    description: "The Americano is another popular type of coffee drink",
+    // description: "The Americano is another popular type of coffee drink",
+    description: `The Americano is another popular type of coffee drink, and it's very easy to make! It's just espresso with hot water dripping over it. The name came about during World War II when European baristas added water to their espresso drinks for the American soldiers stationed there. The resulting drink had a smoother, less concentrated flavour than espresso and thus the Americano was born.`,
     roasted: "Medium Roasted",
     imagelink_square: require("../../food_image/square/ext.png"),
     imagelink_portrait: require("../../food_image/portrait/ext.png"),
@@ -14,7 +16,7 @@ const products = [
     average_rating: 4.7,
     ratings_count: "6,879",
     favourite: false,
-    type: "Coffee",
+    type: "Pizza",
     index: 0,
   },
   {
@@ -32,7 +34,7 @@ const products = [
     average_rating: 4.7,
     ratings_count: "6,879",
     favourite: false,
-    type: "Coffee",
+    type: "Pizza",
     index: 1,
   },
   {
@@ -50,7 +52,7 @@ const products = [
     average_rating: 4.7,
     ratings_count: "6,879",
     favourite: false,
-    type: "Coffee",
+    type: "Bread",
     index: 2,
   },
   {
@@ -68,7 +70,7 @@ const products = [
     average_rating: 4.7,
     ratings_count: "6,879",
     favourite: false,
-    type: "Coffee",
+    type: "Bread",
     index: 3,
   },
 ];

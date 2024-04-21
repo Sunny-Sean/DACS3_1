@@ -21,6 +21,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#EEDCC6",
         tabBarStyle: {
           backgroundColor: "#4d3429",
+          display: "none",
         },
       }}
     >
@@ -29,11 +30,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="menu"
         options={{
-          title: "Menu",
+          title: "Homme",
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="cutlery" color="#FFFFFF" />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color="#FFFFFF" />,
+          href: null,
         }}
       />
     </Tabs>

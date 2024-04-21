@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -35,8 +35,8 @@ function getProductList(category, data) {
   if (category == "All") {
     return data;
   } else {
-    let coffeelist = data.filter((item) => item.name == category);
-    return coffeelist;
+    let productlist = data.filter((item) => item.name == category);
+    return productlist;
   }
 }
 
@@ -55,22 +55,36 @@ export default function MenuScreen() {
     getProductList(categoryIndex.category, productList)
   );
 
-  function searchCoffee(search) {
-    if (search !== "") {
-      ListRef?.current?.scrollToOffset({
-        animated: true,
-        offset: 0,
-      });
-      setCategoryIndex({ index: 0, category: categories[0] });
-      setsortedProduct([
-        ...productList?.filter((item) =>
-          item?.name?.toLowerCase()?.includes(search?.toLowerCase())
-        ),
-      ]);
-    }
-  }
+  // const [search, setSearch] = useState("");
 
-  function resetSearchCoffee() {
+  // Tim kiem
+  useEffect(() => {
+    function searchProduct() {
+      if (searchText !== "") {
+        ListRef?.current?.scrollToOffset({
+          animated: true,
+          offset: 0,
+        });
+        setCategoryIndex({ index: 0, category: categories[0] });
+        setsortedProduct([
+          ...productList?.filter((item) =>
+            item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
+          ),
+        ]);
+      }
+
+      if (searchText == "") {
+        setsortedProduct([
+          ...productList?.filter((item) =>
+            item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
+          ),
+        ]);
+      }
+    }
+    searchProduct();
+  }, [searchText]);
+
+  function resetsearchProduct() {
     ListRef?.current?.scrollToOffset({
       animated: true,
       offset: 0,
@@ -109,7 +123,7 @@ export default function MenuScreen() {
             value={searchText}
             onChangeText={(text) => {
               setSearchText(text);
-              searchCoffee(text);
+              // searchProduct(text);
             }}
             placeholderTextColor={COLORS.primaryWhiteHex}
             style={styles.TextInputContainer}
@@ -117,7 +131,7 @@ export default function MenuScreen() {
           {searchText?.length > 0 ? (
             <TouchableOpacity
               onPress={() => {
-                resetSearchCoffee();
+                resetsearchProduct();
               }}
             >
               <Ionicons
@@ -203,6 +217,7 @@ export default function MenuScreen() {
                   type={item?.type}
                   roasted={item?.roasted}
                   imagelink_square={item?.imagelink_square}
+                  // imagelink_square={item?.image2}
                   name={item?.name}
                   special_ingredient={item?.special_ingredient}
                   average_rating={item?.average_rating}
@@ -253,7 +268,7 @@ const styles = StyleSheet.create({
   },
   CategoryScrollViewStyle: {
     paddingHorizontal: 20,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   CategoryScrollViewContainer: {
     paddingHorizontal: 20,
@@ -284,7 +299,7 @@ const styles = StyleSheet.create({
   CoffeBeansTitle: {
     fontSize: 18,
     marginLeft: 30,
-    marginTop: 20,
+    // marginTop: 20,
     fontWeight: "600",
     color: COLORS.secondaryLightGreyHex,
     color: "#230C02",

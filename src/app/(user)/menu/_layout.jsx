@@ -27,7 +27,7 @@ export default function MenuStack() {
     >
       <Stack.Screen
         name="home"
-        options={{ title: "Menu", headerShown: false }}
+        options={{ title: "Home", headerShown: false }}
       />
     </Stack>
   );
