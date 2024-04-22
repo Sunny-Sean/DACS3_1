@@ -7,7 +7,7 @@ import GradientBGIcon from "./GradientBGIcon";
 const HeaderBar = ({ title }) => {
   return (
     <View style={styles.HeaderContainer}>
-      <GradientBGIcon name="menu" color="#230c02" size={FONTSIZE.size_16} />
+      <GradientBGIcon name="home" color="#230c02" size={FONTSIZE.size_16} />
       <Text style={styles.HeaderText}>{title}</Text>
       <ProfilePic />
     </View>

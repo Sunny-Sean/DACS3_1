@@ -2,16 +2,19 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { COLORS, SPACING } from "../constants/theme2";
 import CustomIcon from "./CustomIcon";
+import { Link } from "expo-router";
 
 function ProfilePic({ name, color, size }) {
   return (
-    <Pressable style={styles.ImageContainer}>
-      <Image
-        style={styles.Image}
-        // source={{ uri: "../assets/app_images/avatar.png" }}
-        source={require("../assets/app_images/chibi2.jpg")}
-      />
-    </Pressable>
+    <Link href={"/cart"} asChild>
+      <Pressable style={styles.ImageContainer}>
+        <Image
+          style={styles.Image}
+          // source={{ uri: "../assets/app_images/avatar.png" }}
+          source={require("../assets/app_images/chibi2.jpg")}
+        />
+      </Pressable>
+    </Link>
   );
 }
 

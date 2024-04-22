@@ -41,7 +41,7 @@ const CartProvider = ({ children }) => {
     setItems(updatedItems);
   };
 
-  console.log(items);
+  // console.log(items);
 
   const total = items
     .reduce((sum, item) => (sum += item.product.price * item.quantity), 0)
@@ -52,7 +52,7 @@ const CartProvider = ({ children }) => {
   }
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total }}>
       {children}
     </CartContext.Provider>
   );

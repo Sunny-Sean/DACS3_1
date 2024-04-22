@@ -1,6 +1,12 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Redirect, Tabs } from "expo-router";
+import {
+  Link,
+  Redirect,
+  Tabs,
+  useLocalSearchParams,
+  useSegments,
+} from "expo-router";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Colors from "../../constants/Colors";
@@ -13,7 +19,15 @@ function TabBarIcon(props) {
 }
 
 export default function TabLayout() {
+  // const { id } = useLocalSearchParams();
   const colorScheme = useColorScheme();
+  const segment = useSegments();
+  // console.log(segment);
+  // console.log(segment[2]);
+  const disNone = segment[2] === "[id]";
+  // const disNone3 = segment == ["(user)", "menu", "[id]"];
+  // const disNone2 = `/${segment[0]}/menu/${id}`;
+  // console.log(disNone3);
 
   return (
     <Tabs
@@ -21,7 +35,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#EEDCC6",
         tabBarStyle: {
           backgroundColor: "#4d3429",
-          display: "none",
+          display: disNone ? "none" : "flex",
+          // display: "flex",
         },
       }}
     >
@@ -30,10 +45,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="menu"
         options={{
-          title: "Homme",
+          title: "Home",
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color="#FFFFFF" />,
-          href: null,
         }}
       />
     </Tabs>

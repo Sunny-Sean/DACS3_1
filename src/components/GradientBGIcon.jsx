@@ -2,20 +2,23 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { COLORS, SPACING } from "../constants/theme2";
 import CustomIcon from "./CustomIcon";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link, useRouter } from "expo-router";
 
 function GradientBGIcon({ name, color, size }) {
   return (
-    <Pressable style={styles.Container}>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        // colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
-        colors={["#f5dab5", "#d1c0ad"]}
-        style={styles.LinearGradient}
-      >
-        <CustomIcon name={name} color={color} size={size} />
-      </LinearGradient>
-    </Pressable>
+    <Link href={"/(user)/menu/home"} asChild>
+      <Pressable style={styles.Container}>
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          // colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+          colors={["#f5dab5", "#d1c0ad"]}
+          style={styles.LinearGradient}
+        >
+          <CustomIcon name={name} color={color} size={size} />
+        </LinearGradient>
+      </Pressable>
+    </Link>
   );
 }
 
