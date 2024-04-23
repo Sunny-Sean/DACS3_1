@@ -7,7 +7,7 @@ const products = [
     image2: require("../../food_image/ext.png"),
     // image2:
     //   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png",
-    price: 12.99,
+    price: 1.99,
     // description: "The Americano is another popular type of coffee drink",
     description: `The Americano is another popular type of coffee drink, and it's very easy to make! It's just espresso with hot water dripping over it. The name came about during World War II when European baristas added water to their espresso drinks for the American soldiers stationed there. The resulting drink had a smoother, less concentrated flavour than espresso and thus the Americano was born.`,
     roasted: "Medium Roasted",
@@ -26,7 +26,7 @@ const products = [
     name: "Pizza",
     image:
       "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/extravaganzza.png",
-    price: 14.99,
+    price: 2.99,
     description: `The Americano is another popular type of coffee drink, and it's very easy to make! It's just espresso with hot water dripping over it. The name came about during World War II when European baristas added water to their espresso drinks for the American soldiers stationed there. The resulting drink had a smoother, less concentrated flavour than espresso and thus the Americano was born.`,
     roasted: "Medium Roasted",
     imagelink_square: require("../../src/assets/coffee_assets/americano/square/americano_pic_2_square.png"),
@@ -44,7 +44,7 @@ const products = [
     name: "Bread",
     image:
       "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png",
-    price: 13.47,
+    price: 3.47,
     description: `Black coffee is arguably the most common type of coffee drink out there. Its popularity can be mainly attributed to how easy it is to make this beverage, be it drip, pour-over, French press, or anything else. Black coffee is usually served with no add-ins.`,
     roasted: "Medium Roasted",
     imagelink_square: require("../../src/assets/coffee_assets/black_coffee/square/black_coffee_pic_1_square.png"),
@@ -62,7 +62,7 @@ const products = [
     name: "Bread",
     image:
       "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/margarita.png",
-    price: 9.9,
+    price: 4.9,
     description: `Black coffee is arguably the most common type of coffee drink out there. Its popularity can be mainly attributed to how easy it is to make this beverage, be it drip, pour-over, French press, or anything else. Black coffee is usually served with no add-ins.`,
     roasted: "Medium Roasted",
     imagelink_square: require("../../src/assets/coffee_assets/black_coffee/square/black_coffee_pic_2_square.png"),

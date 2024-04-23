@@ -23,7 +23,7 @@ function ImageBackgroundInfo({
   imagelink_portrait,
   type,
   id,
-  favourite,
+  // favourite,
   name,
   special_ingredient,
   ingredients,
@@ -63,14 +63,15 @@ function ImageBackgroundInfo({
               </Text>
             </Pressable>
             <TouchableOpacity
-              onPress={() => {
-                ToggleFavourite(favourite, type, id);
-              }}
+            // onPress={() => {
+            //   ToggleFavourite(favourite, type, id);
+            // }}
             >
               <GradientBGIcon
                 name="heart"
                 color={
-                  favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  COLORS.primaryLightGreyHex
                 }
                 size={16}
               />
@@ -87,7 +88,8 @@ function ImageBackgroundInfo({
               <GradientBGIcon
                 name="heart"
                 color={
-                  favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  COLORS.primaryLightGreyHex
                 }
                 size={16}
               />

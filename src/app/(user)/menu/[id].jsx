@@ -53,7 +53,7 @@ function ProductDetailsScreen() {
           imagelink_portrait={product.imagelink_portrait}
           type={product.type}
           id={product.id}
-          favourite={product.favourite}
+          // favourite={product.favourite}
           name={product.name}
           special_ingredient={product.special_ingredient}
           ingredients={product.ingredients}
@@ -127,7 +127,6 @@ function ProductDetailsScreen() {
           buttonTitle="Add to Cart"
           buttonPressHandler={addToCart}
         />
-        {/* <Button onPress={addToCart} text="Add to cart" /> */}
       </ScrollView>
     </View>
   );

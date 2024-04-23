@@ -213,7 +213,7 @@ export default function MenuScreen() {
               >
                 <ProductCard
                   id={item?.id}
-                  index={item?.index}
+                  // index={item?.index}
                   type={item?.type}
                   roasted={item?.roasted}
                   imagelink_square={item?.imagelink_square}

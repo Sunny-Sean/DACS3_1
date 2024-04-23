@@ -50,6 +50,18 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color="#FFFFFF" />,
         }}
       />
+
+      <Tabs.Screen
+        name="payment"
+        options={{
+          title: "Payment Screen",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="credit-card" color="#FFFFFF" />
+          ),
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

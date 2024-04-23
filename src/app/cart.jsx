@@ -11,7 +11,7 @@ import {
 import { useCart } from "../providers/CartProvider";
 // import CartListItem from "../components/CartListItem";
 import Button from "../components/Button";
-import { Link, Redirect, Stack } from "expo-router";
+import { Link, Redirect, Stack, useRouter } from "expo-router";
 import CartIt from "../components/CartIt";
 import { COLORS } from "../constants/theme2";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
@@ -21,7 +21,11 @@ import PaymentFooter from "../components/PaymentFooter";
 
 function CartScreen() {
   const { items, total } = useCart();
+  const router = useRouter();
   // const tabBarHeight = useBottomTabBarHeight();
+  function buttonPressHandler() {
+    router.push("/(user)/payment");
+  }
   return (
     <View style={styles.ScreenContainer}>
       <Stack.Screen options={{ title: "Cart", headerShown: false }} />
@@ -59,7 +63,7 @@ function CartScreen() {
             <PaymentFooter
               buttonTitle="Pay"
               price={total}
-              // buttonPressHandler={buttonPressHandler}
+              buttonPressHandler={buttonPressHandler}
             />
           ) : null}
         </View>
