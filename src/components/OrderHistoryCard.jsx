@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../constants/theme2";
 import OrderItemCard from "./OrderItemCard";
+import { Link, useSegments } from "expo-router";
 
 function OrderHistoryCard({
   navigationHandler,
@@ -10,6 +11,7 @@ function OrderHistoryCard({
   id,
   status,
 }) {
+  const segment = useSegments();
   return (
     <View style={styles.CardContainer}>
       <View style={styles.CardHeader}>
@@ -26,18 +28,24 @@ function OrderHistoryCard({
       </View>
       <View style={styles.ListContainer}>
         {CartList?.map((data, index) => (
-          <TouchableOpacity key={index.toString() + data.id} onPress={() => {}}>
-            <OrderItemCard
-              type={data.products.type}
-              name={data.products.name}
-              imagelink_square={data.products.imagelink_square}
-              special_ingredient={data.products.special_ingredient}
-              size={data.size}
-              price={data.products.price}
-              quantity={data.quantity}
-              //   ItemPrice={data.ItemPrice}
-            />
-          </TouchableOpacity>
+          <Link
+            href={`/${segment[0]}/menu/${data.products.id}`}
+            asChild
+            key={index.toString() + data.id}
+          >
+            <TouchableOpacity onPress={() => {}}>
+              <OrderItemCard
+                type={data.products.type}
+                name={data.products.name}
+                imagelink_square={data.products.imagelink_square}
+                special_ingredient={data.products.special_ingredient}
+                size={data.size}
+                price={data.products.price}
+                quantity={data.quantity}
+                //   ItemPrice={data.ItemPrice}
+              />
+            </TouchableOpacity>
+          </Link>
         ))}
       </View>
     </View>

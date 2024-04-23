@@ -4,6 +4,7 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -11,6 +12,8 @@ import { COLORS, FONTFAMILY } from "../constants/theme2";
 import { AntDesign } from "@expo/vector-icons";
 import BGIcon from "./BGIcon";
 import { Link, useSegments } from "expo-router";
+import { useCart } from "../providers/CartProvider";
+import products from "../../assets/data/products";
 
 const CARD_WIDTH = Dimensions.get("window").width * 0.32;
 
@@ -26,7 +29,19 @@ function ProductCard({
   price,
   buttonPressHandler,
 }) {
+  const { addItem } = useCart();
   const segment = useSegments();
+  const product = products.find((p) => p.id == id);
+
+  const addToCart = () => {
+    addItem(product, "S");
+    // router.push("/cart");
+    ToastAndroid.showWithGravity(
+      `${name} is Added to Cart`,
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  };
   // console.log(segment);
 
   return (
@@ -54,7 +69,7 @@ function ProductCard({
           <Text style={styles.CardPriceCurrency}>
             $<Text style={styles.CartPrice}>{price}</Text>
           </Text>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={addToCart}>
             <BGIcon
               color={COLORS.primaryWhiteHex}
               name="add"

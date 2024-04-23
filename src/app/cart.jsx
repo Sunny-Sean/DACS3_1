@@ -11,7 +11,7 @@ import {
 import { useCart } from "../providers/CartProvider";
 // import CartListItem from "../components/CartListItem";
 import Button from "../components/Button";
-import { Link, Redirect, Stack, useRouter } from "expo-router";
+import { Link, Redirect, Stack, useRouter, useSegments } from "expo-router";
 import CartIt from "../components/CartIt";
 import { COLORS } from "../constants/theme2";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
@@ -23,9 +23,11 @@ function CartScreen() {
   const { items, total } = useCart();
   const router = useRouter();
   // const tabBarHeight = useBottomTabBarHeight();
+  const segment = useSegments();
   function buttonPressHandler() {
     router.push("/(user)/payment");
   }
+
   return (
     <View style={styles.ScreenContainer}>
       <Stack.Screen options={{ title: "Cart", headerShown: false }} />
@@ -42,18 +44,15 @@ function CartScreen() {
             ) : (
               <View style={styles.ListItemContainer}>
                 {items.map((data) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      // navigation.push("Details", {
-                      //   index: data.index,
-                      //   id: data.id,
-                      //   type: data.type,
-                      // });
-                    }}
+                  <Link
+                    href={`/(user)/menu/${data.product.id}`}
+                    asChild
                     key={data.id}
                   >
-                    <CartIt cartItem={data} />
-                  </TouchableOpacity>
+                    <TouchableOpacity>
+                      <CartIt cartItem={data} />
+                    </TouchableOpacity>
+                  </Link>
                 ))}
               </View>
             )}

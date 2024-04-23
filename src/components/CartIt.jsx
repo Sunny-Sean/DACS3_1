@@ -17,7 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function CartIt({ cartItem }) {
   const { updateQuantity } = useCart();
-  console.log(cartItem);
+  // console.log(cartItem);
   return (
     <View>
       <LinearGradient

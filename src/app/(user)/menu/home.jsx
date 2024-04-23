@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTFAMILY } from "../../../constants/theme2";
 import HeaderBar from "../../../components/HeaderBar";
 import ProductCard from "../../../components/ProductCard";
+import { Link } from "expo-router";
 
 function getCategoriesFromData(data) {
   let temp = {};
@@ -202,18 +203,9 @@ export default function MenuScreen() {
           keyExtractor={(item) => item?.id}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity
-              // onPress={() => {
-              //   navigation.push("Details", {
-              //     index: item?.index,
-              //     id: item?.id,
-              //     type: item?.type,
-              //   });
-              // }}
-              >
+              <TouchableOpacity>
                 <ProductCard
                   id={item?.id}
-                  // index={item?.index}
                   type={item?.type}
                   roasted={item?.roasted}
                   imagelink_square={item?.imagelink_square}
