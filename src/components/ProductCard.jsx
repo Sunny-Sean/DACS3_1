@@ -22,7 +22,7 @@ function ProductCard({
   index,
   type,
   roasted,
-  imagelink_square,
+  image,
   name,
   special_ingredient,
   average_rating,
@@ -55,8 +55,7 @@ function ProductCard({
         <ImageBackground
           resizeMode="cover"
           style={styles.CardImageBG}
-          source={imagelink_square}
-          // source={{ uri: imagelink_square }}
+          source={{ uri: image }}
         >
           <View style={styles.CardRatingContainer}>
             <AntDesign name="star" size={16} color={"#230C02"} />

@@ -20,7 +20,7 @@ import { Link, useRouter } from "expo-router";
 
 function ImageBackgroundInfo({
   EnableBackHandler,
-  imagelink_portrait,
+  image,
   type,
   id,
   // favourite,
@@ -37,7 +37,7 @@ function ImageBackgroundInfo({
   return (
     <View>
       <ImageBackground
-        source={imagelink_portrait}
+        source={{ uri: image }}
         style={styles.ItemBackgroundImage}
       >
         {EnableBackHandler ? (

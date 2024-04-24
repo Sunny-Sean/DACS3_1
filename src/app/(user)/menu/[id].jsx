@@ -50,7 +50,7 @@ function ProductDetailsScreen() {
       >
         <ImageBackgroundInfo
           EnableBackHandler={true}
-          imagelink_portrait={product.imagelink_portrait}
+          image={product.image}
           type={product.type}
           id={product.id}
           // favourite={product.favourite}

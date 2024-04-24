@@ -29,7 +29,7 @@ export default function CartIt({ cartItem }) {
       >
         <View>
           <Image
-            source={cartItem.product.imagelink_square}
+            source={{ uri: cartItem.product.image }}
             style={styles.CartItemSingleImage}
           />
         </View>

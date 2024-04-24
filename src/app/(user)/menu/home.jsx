@@ -208,8 +208,7 @@ export default function MenuScreen() {
                   id={item?.id}
                   type={item?.type}
                   roasted={item?.roasted}
-                  imagelink_square={item?.imagelink_square}
-                  // imagelink_square={item?.image2}
+                  image={item?.image}
                   name={item?.name}
                   special_ingredient={item?.special_ingredient}
                   average_rating={item?.average_rating}

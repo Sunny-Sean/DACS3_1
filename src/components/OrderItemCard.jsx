@@ -5,7 +5,7 @@ import { COLORS } from "../constants/theme2";
 function OrderItemCard({
   type,
   name,
-  imagelink_square,
+  image,
   special_ingredient,
   size,
   price,
@@ -22,7 +22,7 @@ function OrderItemCard({
     >
       <View style={styles.CardInfoContainer}>
         <View style={styles.CardImageInfoContainer}>
-          <Image source={imagelink_square} style={styles.Image} />
+          <Image source={{ uri: image }} style={styles.Image} />
           <View>
             <Text style={styles.CardTitle}>{name}</Text>
             <Text style={styles.CardSubtitle}>{special_ingredient}</Text>

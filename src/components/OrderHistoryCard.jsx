@@ -37,7 +37,7 @@ function OrderHistoryCard({
               <OrderItemCard
                 type={data.products.type}
                 name={data.products.name}
-                imagelink_square={data.products.imagelink_square}
+                image={data.products.image}
                 special_ingredient={data.products.special_ingredient}
                 size={data.size}
                 price={data.products.price}
