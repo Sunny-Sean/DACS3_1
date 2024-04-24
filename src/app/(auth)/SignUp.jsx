@@ -16,7 +16,7 @@ import { COLORS, SIZES } from "../../constants/theme";
 import LottieView from "lottie-react-native";
 import Button from "../../components/Button2";
 import { Link, Stack } from "expo-router";
-//   import { supabase } from "../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -35,13 +35,13 @@ function SignUp() {
   const [obsecureText, setObsecureText] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  //   async function SignUpWithEmail() {
-  //     setLoading(true);
-  //     const { error } = await supabase.auth.signUp({ email, password });
+  async function SignUpWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({ email, password });
 
-  //     if (error) Alert.alert(error.message);
-  //     setLoading(false);
-  //   }
+    if (error) Alert.alert(error.message);
+    setLoading(false);
+  }
 
   function loginFunc() {}
 
@@ -162,7 +162,7 @@ function SignUp() {
                 loader={loader}
                 title={loading ? "Creating an account " : "S I G N U P"}
                 // onPress={isValid ? handleSubmit : inValidForm}
-                // onPress={SignUpWithEmail}
+                onPress={SignUpWithEmail}
                 isValid={isValid}
                 disabled={loading}
               />

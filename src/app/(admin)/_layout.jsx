@@ -1,12 +1,17 @@
 import { Link, Redirect, Tabs } from "expo-router";
 import Colors from "../../constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useAuth } from "../../providers/AuthProvider";
 
 function TabBarIcon(props) {
   return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
+  const { isAdmin } = useAuth();
+  if (!isAdmin) {
+    return <Redirect href={"/"} />;
+  }
   return (
     <Tabs
       screenOptions={{

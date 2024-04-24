@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Colors from "../../constants/Colors";
 import { useColorScheme } from "../../components/useColorScheme";
+import { useAuth } from "../../providers/AuthProvider";
 
 const Tabss = createBottomTabNavigator();
 
@@ -19,6 +20,11 @@ function TabBarIcon(props) {
 }
 
 export default function TabLayout() {
+  const { session } = useAuth();
+
+  if (!session) {
+    return <Redirect href={"/"} />;
+  }
   // const { id } = useLocalSearchParams();
   const colorScheme = useColorScheme();
   const segment = useSegments();

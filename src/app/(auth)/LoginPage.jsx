@@ -17,7 +17,7 @@ import LottieView from "lottie-react-native";
 import Button from "../../components/Button2";
 import BackBtn from "../../components/BackBtn";
 import { Link, Stack } from "expo-router";
-// import { supabase } from "../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -36,16 +36,16 @@ function LoginPage() {
   const [obsecureText, setObsecureText] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  //   async function signInWithEmail() {
-  //     setLoading(true);
-  //     const { error } = await supabase.auth.signInWithPassword({
-  //       email,
-  //       password,
-  //     });
+  async function signInWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  //     if (error) Alert.alert(error.message);
-  //     setLoading(false);
-  //   }
+    if (error) Alert.alert(error.message);
+    setLoading(false);
+  }
 
   function loginFunc() {}
   return (
@@ -164,7 +164,7 @@ function LoginPage() {
               <Button
                 loader={loader}
                 title={loading ? "Waiting for login..." : "L o g i n"}
-                // onPress={signInWithEmail}
+                onPress={signInWithEmail}
                 disabled={loading}
                 isValid={isValid}
               />
