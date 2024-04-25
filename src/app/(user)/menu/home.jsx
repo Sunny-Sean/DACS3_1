@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   ScrollView,
@@ -17,18 +18,20 @@ import { COLORS, FONTFAMILY } from "../../../constants/theme2";
 import HeaderBar from "../../../components/HeaderBar";
 import ProductCard from "../../../components/ProductCard";
 import { Link } from "expo-router";
+import { supabase } from "../../../lib/supabase";
+import { useProductList } from "../../../api/products";
 
 function getCategoriesFromData(data) {
   let temp = {};
-  for (let i = 0; i < data.length; i++) {
-    if (temp[data[i].name] == undefined) {
-      temp[data[i].name] = 1;
+  for (let i = 0; i < data?.length; i++) {
+    if (temp[data[i]?.name] == undefined) {
+      temp[data[i]?.name] = 1;
     } else {
-      temp[data[i].name]++;
+      temp[data[i]?.name]++;
     }
   }
-  let categories = Object.keys(temp);
-  categories.unshift("All");
+  let categories = Object?.keys(temp);
+  categories?.unshift("All");
   return categories;
 }
 
@@ -36,54 +39,82 @@ function getProductList(category, data) {
   if (category == "All") {
     return data;
   } else {
-    let productlist = data.filter((item) => item.name == category);
+    let productlist = data?.filter((item) => item?.name == category);
     return productlist;
   }
 }
 
 export default function MenuScreen() {
+  const { data: products, error, isLoading } = useProductList();
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return <Text>Faild to fetch data</Text>;
+  }
+
   const ListRef = useRef();
-  const productList = useStore((state) => state.productList);
+  // const productList = useStore((state) => state.productList);
   const [searchText, setSearchText] = useState("");
-  const [categories, setCategories] = useState(
-    getCategoriesFromData(productList)
-  );
+  // const [categories, setCategories] = useState(
+  //   getCategoriesFromData(productList)
+  // );
+
+  const [categories, setCategories] = useState(getCategoriesFromData(products));
   const [categoryIndex, setCategoryIndex] = useState({
     index: 0,
     category: categories[0],
   });
   const [sortedProduct, setsortedProduct] = useState(
-    getProductList(categoryIndex.category, productList)
+    // getProductList(categoryIndex.category, productList)
+    getProductList(categoryIndex.category, products)
   );
 
-  // const [search, setSearch] = useState("");
-
   // Tim kiem
-  useEffect(() => {
-    function searchProduct() {
-      if (searchText !== "") {
-        ListRef?.current?.scrollToOffset({
-          animated: true,
-          offset: 0,
-        });
-        setCategoryIndex({ index: 0, category: categories[0] });
-        setsortedProduct([
-          ...productList?.filter((item) =>
-            item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-          ),
-        ]);
-      }
+  // useEffect(() => {
+  //   function searchProduct() {
+  //     if (searchText !== "") {
+  //       ListRef?.current?.scrollToOffset({
+  //         animated: true,
+  //         offset: 0,
+  //       });
+  //       setCategoryIndex({ index: 0, category: categories[0] });
+  //       setsortedProduct([
+  //         ...products?.filter((item) =>
+  //           item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
+  //         ),
+  //       ]);
+  //     }
 
-      if (searchText == "") {
-        setsortedProduct([
-          ...productList?.filter((item) =>
-            item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-          ),
-        ]);
-      }
+  //     if (searchText == "") {
+  //       setsortedProduct([
+  //         ...products?.filter((item) =>
+  //           item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
+  //         ),
+  //       ]);
+  //     }
+  //   }
+
+  //   searchProduct();
+  //   return () => {};
+  // }, [searchText]);
+
+  function searchCoffee(search) {
+    if (search !== "") {
+      ListRef?.current?.scrollToOffset({
+        animated: true,
+        offset: 0,
+      });
+      setCategoryIndex({ index: 0, category: categories[0] });
+      setSortedCoffee([
+        ...CoffeeList?.filter((item) =>
+          item?.name?.toLowerCase()?.includes(search?.toLowerCase())
+        ),
+      ]);
     }
-    searchProduct();
-  }, [searchText]);
+  }
 
   function resetsearchProduct() {
     ListRef?.current?.scrollToOffset({
@@ -91,7 +122,8 @@ export default function MenuScreen() {
       offset: 0,
     });
     setCategoryIndex({ index: 0, category: categories[0] });
-    setsortedProduct([...productList]);
+    // setsortedProduct([...productList]);
+    setsortedProduct([...products]);
     setSearchText("");
   }
 
@@ -114,7 +146,7 @@ export default function MenuScreen() {
             name="search"
             size={18}
             color={
-              searchText.length > 0
+              searchText?.length > 0
                 ? COLORS.primaryOrangeHex
                 : COLORS.primaryWhiteHex
             }
@@ -124,7 +156,7 @@ export default function MenuScreen() {
             value={searchText}
             onChangeText={(text) => {
               setSearchText(text);
-              // searchProduct(text);
+              searchProduct(text);
             }}
             placeholderTextColor={COLORS.primaryWhiteHex}
             style={styles.TextInputContainer}
@@ -162,8 +194,11 @@ export default function MenuScreen() {
                     index: index,
                     category: categories[index],
                   });
+                  // setsortedProduct([
+                  //   ...getProductList(categories[index], productList),
+                  // ]);
                   setsortedProduct([
-                    ...getProductList(categories[index], productList),
+                    ...getProductList(categories[index], products),
                   ]);
                 }}
                 style={styles.CategoryScrollViewItem}

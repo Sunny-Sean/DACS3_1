@@ -14,12 +14,12 @@ import BGIcon from "./BGIcon";
 import { Link, useSegments } from "expo-router";
 import { useCart } from "../providers/CartProvider";
 import products from "../../assets/data/products";
+import { defaultPizzaImage } from "./ProductListItem_Admin";
 
 const CARD_WIDTH = Dimensions.get("window").width * 0.32;
 
 function ProductCard({
   id,
-  index,
   type,
   roasted,
   image,
@@ -55,7 +55,7 @@ function ProductCard({
         <ImageBackground
           resizeMode="cover"
           style={styles.CardImageBG}
-          source={{ uri: image }}
+          source={{ uri: image || defaultPizzaImage }}
         >
           <View style={styles.CardRatingContainer}>
             <AntDesign name="star" size={16} color={"#230C02"} />

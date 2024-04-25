@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../constants/theme2";
+import { defaultPizzaImage } from "./ProductListItem_Admin";
 
 function OrderItemCard({
   type,
@@ -22,7 +23,10 @@ function OrderItemCard({
     >
       <View style={styles.CardInfoContainer}>
         <View style={styles.CardImageInfoContainer}>
-          <Image source={{ uri: image }} style={styles.Image} />
+          <Image
+            source={{ uri: image || defaultPizzaImage }}
+            style={styles.Image}
+          />
           <View>
             <Text style={styles.CardTitle}>{name}</Text>
             <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
@@ -43,7 +47,8 @@ function OrderItemCard({
         <View style={styles.CardTableRow}>
           <View style={styles.SizeBoxLeft}>
             <Text
-              style={[styles.SizeText, { fontSize: type === "Bean" ? 12 : 14 }]}
+              // style={[styles.SizeText, { fontSize: type === "Bean" ? 12 : 14 }]}
+              style={[styles.SizeText, { fontSize: 12 }]}
             >
               {size}
             </Text>

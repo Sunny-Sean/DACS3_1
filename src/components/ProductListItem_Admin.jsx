@@ -34,6 +34,7 @@ const ProductListItem = ({ product }) => {
         <Text style={styles.price}>{product.average_rating}</Text>
         <Text style={styles.title}>{product.ratings_count}</Text>
         <Text style={styles.title}>{product.type}</Text> */}
+        {/* <Text style={styles.title}>{product.special_ingredient}</Text> */}
         <Text style={styles.price}>${product.price}</Text>
       </Pressable>
     </Link>

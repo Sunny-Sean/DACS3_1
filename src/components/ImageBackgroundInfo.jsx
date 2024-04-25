@@ -17,6 +17,7 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
+import { defaultPizzaImage } from "./ProductListItem_Admin";
 
 function ImageBackgroundInfo({
   EnableBackHandler,
@@ -37,7 +38,7 @@ function ImageBackgroundInfo({
   return (
     <View>
       <ImageBackground
-        source={{ uri: image }}
+        source={{ uri: image || defaultPizzaImage }}
         style={styles.ItemBackgroundImage}
       >
         {EnableBackHandler ? (

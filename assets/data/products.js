@@ -13,7 +13,6 @@ const products = [
     ratings_count: "6,879",
     favourite: false,
     type: "Pizza",
-    index: 0,
   },
   {
     id: 2,
@@ -29,7 +28,6 @@ const products = [
     ratings_count: "6,879",
     favourite: false,
     type: "Pizza",
-    index: 1,
   },
   {
     id: 3,
@@ -45,7 +43,6 @@ const products = [
     ratings_count: "6,879",
     favourite: false,
     type: "Bread",
-    index: 2,
   },
   {
     id: 4,
@@ -61,7 +58,6 @@ const products = [
     ratings_count: "6,879",
     favourite: false,
     type: "Bread",
-    index: 3,
   },
 ];
 

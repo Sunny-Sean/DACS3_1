@@ -108,7 +108,8 @@ function ProductDetailsScreen() {
                   style={[
                     styles.SizeText,
                     {
-                      fontSize: product.type === "Bread" ? 14 : 16,
+                      // fontSize: product.type === "Bread" ? 14 : 16,
+                      fontSize: 14,
                       color:
                         size === selectedSize
                           ? COLORS.primaryOrangeHex

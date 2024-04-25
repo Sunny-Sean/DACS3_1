@@ -15,16 +15,7 @@ import OrderHistoryCard from "../../components/OrderHistoryCard";
 import orders from "../../../assets/data/orders";
 
 function order() {
-  // const OrderHistoryList = useStore((state) => state.OrderHistoryList);
   const [showAnimation, setShowAnimation] = useState(false);
-
-  //   function navigationHandler({ index, id, type }) {
-  //     navigation.push("Details", {
-  //       index,
-  //       id,
-  //       type,
-  //     });
-  //   }
 
   function navigationHandler() {}
 

@@ -14,6 +14,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useCart } from "../providers/CartProvider";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { defaultPizzaImage } from "./ProductListItem_Admin";
 
 export default function CartIt({ cartItem }) {
   const { updateQuantity } = useCart();
@@ -29,7 +30,7 @@ export default function CartIt({ cartItem }) {
       >
         <View>
           <Image
-            source={{ uri: cartItem.product.image }}
+            source={{ uri: cartItem.product.image || defaultPizzaImage }}
             style={styles.CartItemSingleImage}
           />
         </View>
