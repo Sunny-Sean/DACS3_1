@@ -13,3 +13,22 @@ export function useProductList() {
     },
   });
 }
+
+// Doc san pham theo id
+export function useProduct(id) {
+  return useQuery({
+    queryKey: ["products", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    },
+  });
+}

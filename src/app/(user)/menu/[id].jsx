@@ -15,13 +15,19 @@ import ImageBackgroundInfo from "../../../components/ImageBackgroundInfo";
 import PaymentFooter from "../../../components/PaymentFooter";
 import { useCart } from "../../../providers/CartProvider";
 import Button from "../../../components/Button";
+import { useProduct } from "../../../api/products";
+import { ActivityIndicator } from "react-native";
 
 const SIZES = ["S", "M", "L"];
 
 function ProductDetailsScreen() {
-  const { id } = useLocalSearchParams();
+  // const { id } = useLocalSearchParams();
+  // const product = products.find((p) => p.id.toString() === id);
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
+
+  const { data: product, error, isLoading } = useProduct(id);
   const router = useRouter();
-  const product = products.find((p) => p.id.toString() === id);
   // console.log(product);
   const [fullDesc, setFullDesc] = useState(false);
   const [selectedSize, setSelectedSize] = useState("S");
@@ -40,6 +46,14 @@ function ProductDetailsScreen() {
     router.push("/cart");
   };
 
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return <Text>Faild to fetch data</Text>;
+  }
+
   return (
     <View style={styles.ScreenContainer}>
       <Stack.Screen options={{ title: product?.name, headerShown: false }} />
@@ -50,7 +64,7 @@ function ProductDetailsScreen() {
       >
         <ImageBackgroundInfo
           EnableBackHandler={true}
-          image={product.image}
+          image={product?.image}
           type={product.type}
           id={product.id}
           // favourite={product.favourite}

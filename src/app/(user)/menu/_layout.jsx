@@ -9,6 +9,7 @@ export default function MenuStack() {
   return (
     <Stack
       screenOptions={{
+        // headerShown: false,
         headerRight: () => (
           <Link href="/" asChild>
             <Pressable>
