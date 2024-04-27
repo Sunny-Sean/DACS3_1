@@ -48,17 +48,15 @@ export default function MenuScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
-    try {
-      const { data, error } = await supabase.from("products").select("*");
-      setProducts(data); // Cập nhật trạng thái products trực tiếp
-      setError(error);
-      setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
-      setCategories(getCategoriesFromData(data) || []); // Cập nhật categories
-    } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); // Ghi nhật ký lỗi để gỡ lỗi
-      setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
-      setIsLoading(false); // Reset trạng thái tải
-    }
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .then((data) => {
+        setProducts(data.data);
+        setError(error);
+        setIsLoading(false);
+        setCategories(getCategoriesFromData(data.data) || []);
+      });
   };
 
   const ListRef = useRef();
@@ -91,6 +89,13 @@ export default function MenuScreen() {
     }
   }
 
+  // Tim kiem
+  // useEffect(() => {
+
+  //   searchProduct();
+  //   return () => {};
+  // }, [searchText]);
+
   function resetsearchProduct() {
     ListRef?.current?.scrollToOffset({
       animated: true,
@@ -115,16 +120,8 @@ export default function MenuScreen() {
   );
 
   useEffect(() => {}, [isLoading, products]);
-
   useEffect(() => {
-    console.log(categories);
-    setCategoryIndex({
-      index: 0,
-      category: categories[0],
-    });
-  }, [searchText]);
-
-  useEffect(() => {
+    // setsortedProduct(getProductList(categoryIndex.category, products.data));
     console.log(categories);
     setCategoryIndex({
       index: 0,
@@ -132,32 +129,11 @@ export default function MenuScreen() {
     });
   }, [categories]);
 
-  // useEffect(() => {
-  //   if (products && categoryIndex) {
-  //     const filteredProducts = products.filter((item) =>
-  //       item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-  //     );
-  //     setsortedProduct(
-  //       getProductList(categoryIndex.category, filteredProducts)
-  //     );
-  //   }
-
-  //   if (searchText === "") {
-  //     setsortedProduct(getProductList(categoryIndex.category, products));
-  //   }
-  // }, [products, categoryIndex, searchText]);
-
   useEffect(() => {
-    if (!products) return; // Trả về sớm nếu products chưa được lấy
-
-    const filteredProducts = searchText
-      ? products.filter((item) =>
-          item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-        )
-      : [...products]; // Hiển thị tất cả sản phẩm nếu searchText trống hoặc sai
-
-    setsortedProduct(getProductList(categoryIndex.category, filteredProducts));
-  }, [products, categoryIndex, searchText]); // Cập nhật khi products, category hoặc search thay đổi
+    if (categoryIndex) {
+      setsortedProduct(getProductList(categoryIndex.category, products));
+    }
+  }, [categoryIndex]);
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -196,7 +172,7 @@ export default function MenuScreen() {
             value={searchText}
             onChangeText={(text) => {
               setSearchText(text);
-              // searchProduct(text);
+              searchProduct(text);
             }}
             placeholderTextColor={COLORS.primaryWhiteHex}
             style={styles.TextInputContainer}

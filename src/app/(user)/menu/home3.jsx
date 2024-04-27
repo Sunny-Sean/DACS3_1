@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -9,13 +8,18 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
+import { useStore } from "../../../store/store";
+import { Ionicons } from "@expo/vector-icons";
+import { COLORS, FONTFAMILY } from "../../../constants/theme2";
 import HeaderBar from "../../../components/HeaderBar";
 import ProductCard from "../../../components/ProductCard";
-import { COLORS } from "../../../constants/theme2";
+import { Link } from "expo-router";
 import { supabase } from "../../../lib/supabase";
+import { useProductList } from "../../../api/products";
 
 function getCategoriesFromData(data) {
   let temp = {};
@@ -32,7 +36,6 @@ function getCategoriesFromData(data) {
 }
 
 function getProductList(category, data) {
-  console.log("category", category);
   if (category == "All") {
     return data;
   } else {
@@ -42,24 +45,15 @@ function getProductList(category, data) {
 }
 
 export default function MenuScreen() {
-  // const { data: products, error, isLoading } = useProductList();
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: products, error, isLoading } = useProductList();
 
-  const fetchData = async () => {
-    try {
-      const { data, error } = await supabase.from("products").select("*");
-      setProducts(data); // Cập nhật trạng thái products trực tiếp
-      setError(error);
-      setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
-      setCategories(getCategoriesFromData(data) || []); // Cập nhật categories
-    } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); // Ghi nhật ký lỗi để gỡ lỗi
-      setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
-      setIsLoading(false); // Reset trạng thái tải
-    }
-  };
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return <Text>Faild to fetch data</Text>;
+  }
 
   const ListRef = useRef();
   // const productList = useStore((state) => state.productList);
@@ -68,6 +62,19 @@ export default function MenuScreen() {
   //   getCategoriesFromData(productList)
   // );
 
+  const [categories, setCategories] = useState(
+    getCategoriesFromData(products) || []
+  );
+  const [categoryIndex, setCategoryIndex] = useState({
+    index: 0,
+    category: categories[0],
+  });
+  const [sortedProduct, setsortedProduct] = useState(
+    // getProductList(categoryIndex.category, productList)
+    getProductList(categoryIndex.category, products || [])
+  );
+
+  //  Tim kiem:
   function searchProduct() {
     if (searchText !== "") {
       ListRef?.current?.scrollToOffset({
@@ -102,71 +109,6 @@ export default function MenuScreen() {
     setSearchText("");
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const [categories, setCategories] = useState([]);
-  const [categoryIndex, setCategoryIndex] = useState({});
-  const [sortedProduct, setsortedProduct] = useState(
-    // getProductList(categoryIndex.category, productList)
-    // getProductList(categoryIndex.category, products)
-    []
-  );
-
-  useEffect(() => {}, [isLoading, products]);
-
-  useEffect(() => {
-    console.log(categories);
-    setCategoryIndex({
-      index: 0,
-      category: categories[0],
-    });
-  }, [searchText]);
-
-  useEffect(() => {
-    console.log(categories);
-    setCategoryIndex({
-      index: 0,
-      category: categories[0],
-    });
-  }, [categories]);
-
-  // useEffect(() => {
-  //   if (products && categoryIndex) {
-  //     const filteredProducts = products.filter((item) =>
-  //       item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-  //     );
-  //     setsortedProduct(
-  //       getProductList(categoryIndex.category, filteredProducts)
-  //     );
-  //   }
-
-  //   if (searchText === "") {
-  //     setsortedProduct(getProductList(categoryIndex.category, products));
-  //   }
-  // }, [products, categoryIndex, searchText]);
-
-  useEffect(() => {
-    if (!products) return; // Trả về sớm nếu products chưa được lấy
-
-    const filteredProducts = searchText
-      ? products.filter((item) =>
-          item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-        )
-      : [...products]; // Hiển thị tất cả sản phẩm nếu searchText trống hoặc sai
-
-    setsortedProduct(getProductList(categoryIndex.category, filteredProducts));
-  }, [products, categoryIndex, searchText]); // Cập nhật khi products, category hoặc search thay đổi
-
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
-  if (error) {
-    return <Text>Faild to fetch data</Text>;
-  }
-
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} hidden={true} />
@@ -196,7 +138,7 @@ export default function MenuScreen() {
             value={searchText}
             onChangeText={(text) => {
               setSearchText(text);
-              // searchProduct(text);
+              searchProduct(text);
             }}
             placeholderTextColor={COLORS.primaryWhiteHex}
             style={styles.TextInputContainer}
