@@ -7,7 +7,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
 
@@ -19,6 +19,12 @@ import { decode } from "base64-arraybuffer";
 
 import Colors from "../../../constants/Colors";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import {
+  useDeleteProduct,
+  useInsertProduct,
+  useProduct,
+  useUpdateProduct,
+} from "../../../api/products";
 
 function CreateProductScreen() {
   const [name, setName] = useState("");
@@ -41,6 +47,28 @@ function CreateProductScreen() {
   );
   // console.log("id: " + id);
   const isUpdating = !!id;
+
+  const router = useRouter();
+
+  const { mutate: insertProduct } = useInsertProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
+  const { data: updatingProduct } = useProduct(id);
+
+  useEffect(() => {
+    if (updatingProduct) {
+      setName(updatingProduct.name);
+      setPrice(updatingProduct.price.toString());
+      setImage(updatingProduct.image);
+      setDescription(updatingProduct.description);
+      setRoasted(updatingProduct.roasted);
+      setIngredients(updatingProduct.ingredients);
+      setSpecialIngredient(updatingProduct.special_ingredient);
+      setAverageRating(updatingProduct.average_rating.toString());
+      setRatingsCount(updatingProduct.ratings_count);
+      setType(updatingProduct.type);
+    }
+  }, [updatingProduct]);
 
   function resetFields() {
     setName("");
@@ -110,11 +138,29 @@ function CreateProductScreen() {
       return;
     }
 
-    console.warn("Creating product: ", name);
+    // console.warn("Creating product: ", name);
 
     // Save trong database
-
-    resetFields();
+    insertProduct(
+      {
+        name,
+        price: parseFloat(price),
+        image,
+        description,
+        roasted,
+        ingredients,
+        specialIngredient,
+        averageRating: parseFloat(averageRating),
+        ratingsCount,
+        type,
+      },
+      {
+        onSuccess: () => {
+          resetFields();
+          router.back();
+        },
+      }
+    );
   }
 
   function onUpdate() {
@@ -123,11 +169,30 @@ function CreateProductScreen() {
       return;
     }
 
-    console.warn("Updating product: ");
+    // console.warn("Updating product: ");
 
     // Save trong database
-
-    resetFields();
+    updateProduct(
+      {
+        id,
+        name,
+        price: parseFloat(price),
+        image,
+        description,
+        roasted,
+        ingredients,
+        specialIngredient,
+        averageRating: parseFloat(averageRating),
+        ratingsCount,
+        type,
+      },
+      {
+        onSuccess: () => {
+          resetFields();
+          router.back();
+        },
+      }
+    );
   }
 
   function onSubmit() {
@@ -139,7 +204,13 @@ function CreateProductScreen() {
   }
 
   function onDelete() {
-    console.warn("Delete");
+    deleteProduct(id, {
+      onSuccess: () => {
+        resetFields();
+        router.replace("/(admin)");
+      },
+    });
+    // console.warn("Delete");
   }
 
   function confirmDelete() {
@@ -181,7 +252,11 @@ function CreateProductScreen() {
           options={{ title: isUpdating ? "Update Product" : "Create Product" }}
         />
         <Image
-          source={{ uri: image || defaultPizzaImage }}
+          source={{
+            uri:
+              image ||
+              "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png",
+          }}
           style={styles.image}
         />
         <Text onPress={pickImage} style={styles.textButton}>

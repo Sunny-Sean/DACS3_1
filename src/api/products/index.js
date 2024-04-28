@@ -32,3 +32,92 @@ export function useProduct(id) {
     },
   });
 }
+
+// Them san pham
+export function useInsertProduct() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(data) {
+      const { error, data: newProduct } = await supabase
+        .from("products")
+        .insert({
+          name: data.name,
+          image: data.image,
+          price: data.price,
+          description: data.description,
+          roasted: data.roasted,
+          ingredients: data.ingredients,
+          special_ingredient: data.specialIngredient,
+          average_rating: data.averageRating,
+          ratings_count: data.ratingsCount,
+          type: data.type,
+        })
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return newProduct;
+    },
+
+    // Xoa cache cua products va lam moi lai danh sach
+    async onSuccess() {
+      await queryClient.invalidateQueries(["products"]);
+    },
+  });
+}
+
+export function useUpdateProduct() {
+  // queryClientL: tương tác và thực hiện truy vấn
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(data) {
+      const { error, data: updatedProduct } = await supabase
+        .from("products")
+        .update({
+          name: data.name,
+          image: data.image,
+          price: data.price,
+          description: data.description,
+          roasted: data.roasted,
+          ingredients: data.ingredients,
+          special_ingredient: data.specialIngredient,
+          average_rating: data.averageRating,
+          ratings_count: data.ratingsCount,
+          type: data.type,
+        })
+        .eq("id", data.id)
+        .select()
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return updatedProduct;
+    },
+
+    // Sau khi them thanh cong thi tai lai du lieu
+    async onSuccess(_, { id }) {
+      await queryClient.invalidateQueries(["products"]);
+      await queryClient.invalidateQueries(["products", id]);
+    },
+  });
+}
+
+export function useDeleteProduct() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(id) {
+      const { error } = await supabase.from("products").delete().eq("id", id);
+      if (error) {
+        throw new Error(error.message);
+      }
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries(["products"]);
+    },
+  });
+}
