@@ -15,6 +15,7 @@ import { Link, useSegments } from "expo-router";
 import { useCart } from "../providers/CartProvider";
 import products from "../../assets/data/products";
 import { defaultPizzaImage } from "./ProductListItem_Admin";
+import { useProduct } from "../api/products";
 
 const CARD_WIDTH = Dimensions.get("window").width * 0.32;
 
@@ -31,7 +32,8 @@ function ProductCard({
 }) {
   const { addItem } = useCart();
   const segment = useSegments();
-  const product = products.find((p) => p.id == id);
+  // const product = products.find((p) => p.id == id);
+  const { data: product } = useProduct(id);
 
   const addToCart = () => {
     addItem(product, "S");

@@ -67,6 +67,15 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
+        name="order2"
+        options={{
+          title: "Orders",
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
         name="payment"
         options={{
           title: "Payment Screen",

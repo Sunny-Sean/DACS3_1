@@ -51,17 +51,15 @@ const PaymentList = [
 ];
 
 function payment() {
-  const { total } = useCart();
+  const { total, checkout } = useCart();
   const [paymentMode, setPaymentMode] = useState("Credit Card");
   const [showAnimation, setShowAnimation] = useState(false);
 
   function buttonPressHandler() {
     setShowAnimation(true);
-    // addToOrderHistoryListFromCart();
-    // calcullateCartPrice();
     setTimeout(() => {
       setShowAnimation(false);
-      // navigation.navigate("History");
+      checkout();
     }, 2000);
   }
   return (

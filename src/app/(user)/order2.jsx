@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,9 +14,25 @@ import PopUpAnimation from "../../components/PopUpAnimation";
 import { useState } from "react";
 import OrderHistoryCard from "../../components/OrderHistoryCard";
 import orders from "../../../assets/data/orders";
+import {
+  useAdminOrderList,
+  useMyOrderList,
+  useOrderDetails,
+} from "../../api/orders";
 
 function order() {
   const [showAnimation, setShowAnimation] = useState(false);
+
+  const { data: orders, isLoading, error } = useMyOrderList();
+  const { data: order2, isLoading2, error2 } = useOrderDetails(orders.id);
+
+  if (isLoading || isLoading2) {
+    return <ActivityIndicator />;
+  }
+
+  if (error || error2) {
+    return <Text>Faild to fetch data</Text>;
+  }
 
   function navigationHandler() {}
 
@@ -53,6 +70,7 @@ function order() {
                     key={index.toString()}
                     navigationHandler={navigationHandler}
                     CartList={data.order_items}
+                    // CartList={order2.order_items}
                     CartListPrice={data.total}
                     OrderDate={data.created_at}
                     id={data.id}

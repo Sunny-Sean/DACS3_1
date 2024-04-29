@@ -1,7 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { COLORS } from "../constants/theme2";
 import OrderItemCard from "./OrderItemCard";
 import { Link, useSegments } from "expo-router";
+import { useMyOrderList, useOrderDetails } from "../api/orders";
 
 function OrderHistoryCard({
   navigationHandler,
@@ -12,6 +19,19 @@ function OrderHistoryCard({
   status,
 }) {
   const segment = useSegments();
+  // const { data: order, isLoading, error } = useOrderDetails(id);
+  // console.log(order);
+  // const { data: orders, isLoading, error } = useMyOrderList();
+  // console.log(orders);
+
+  // console.log(CartList);
+  // if (isLoading) {
+  //   return <ActivityIndicator />;
+  // }
+
+  // if (error) {
+  //   return <Text>Faild to fetch data</Text>;
+  // }
   return (
     <View style={styles.CardContainer}>
       <View style={styles.CardHeader}>

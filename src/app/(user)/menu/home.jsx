@@ -32,7 +32,7 @@ function getCategoriesFromData(data) {
 }
 
 function getProductList(category, data) {
-  console.log("category", category);
+  // console.log("category", category);
   if (category == "All") {
     return data;
   } else {
@@ -117,7 +117,7 @@ export default function MenuScreen() {
   useEffect(() => {}, [isLoading, products]);
 
   useEffect(() => {
-    console.log(categories);
+    // console.log(categories);
     setCategoryIndex({
       index: 0,
       category: categories[0],
@@ -125,7 +125,7 @@ export default function MenuScreen() {
   }, [searchText]);
 
   useEffect(() => {
-    console.log(categories);
+    // console.log(categories);
     setCategoryIndex({
       index: 0,
       category: categories[0],
