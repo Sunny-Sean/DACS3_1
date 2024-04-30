@@ -16,6 +16,7 @@ import { useCart } from "../providers/CartProvider";
 import products from "../../assets/data/products";
 import { defaultPizzaImage } from "./ProductListItem_Admin";
 import { useProduct } from "../api/products";
+import RemoteImage from "./RemoteImage";
 
 const CARD_WIDTH = Dimensions.get("window").width * 0.32;
 
@@ -54,7 +55,7 @@ function ProductCard({
         style={styles.CardLinearGradientContainer}
         colors={["#f5dab5", "#b39c7f"]}
       >
-        <ImageBackground
+        {/* <ImageBackground
           resizeMode="cover"
           style={styles.CardImageBG}
           source={{ uri: image || defaultPizzaImage }}
@@ -63,7 +64,20 @@ function ProductCard({
             <AntDesign name="star" size={16} color={"#230C02"} />
             <Text style={styles.CardRatingText}>{average_rating}</Text>
           </View>
-        </ImageBackground>
+        </ImageBackground> */}
+        <RemoteImage
+          path={image}
+          fallback={
+            "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+          }
+          style={styles.CardImageBG}
+          resizeMode="contain"
+        >
+          <View style={styles.CardRatingContainer}>
+            <AntDesign name="star" size={16} color={"#230C02"} />
+            <Text style={styles.CardRatingText}>{average_rating}</Text>
+          </View>
+        </RemoteImage>
         <Text style={styles.CardTitle}>{name}</Text>
         <Text style={styles.CardSubtitle}>{special_ingredient}</Text>
         <View style={styles.CardFooterRow}>

@@ -10,7 +10,7 @@ function OrderItemListItem_Admin({ item }) {
   // console.log(item.products.id);
 
   return (
-    <Link href={`/(admin)/menu/${item.products.id}`} asChild>
+    <Link href={`/${segment[0]}/menu/${item.products.id}`} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: item.products.image || defaultPizzaImage }}

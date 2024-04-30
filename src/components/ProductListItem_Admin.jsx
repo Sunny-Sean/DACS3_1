@@ -1,5 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Link, useSegments } from "expo-router";
+import RemoteImage from "./RemoteImage";
 
 export const defaultPizzaImage =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
@@ -13,28 +14,20 @@ const ProductListItem = ({ product }) => {
   return (
     <Link href={`/${segment[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
-        {/* <RemoteImage
+        <RemoteImage
           path={product.image}
           fallback={
             "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
           }
           style={styles.image}
           resizeMode="contain"
-        /> */}
-        <Image
+        />
+        {/* <Image
           source={{ uri: product.image || defaultPizzaImage }}
           style={styles.image}
           resizeMode="contain"
-        />
+        /> */}
         <Text style={styles.title}>{product.name}</Text>
-        {/* <Text style={styles.title}>{product.description}</Text>
-        <Text style={styles.title}>{product.roasted}</Text>
-        <Text style={styles.title}>{product.ingredients}</Text>
-        <Text style={styles.title}>{product.special_ingredient}</Text>
-        <Text style={styles.price}>{product.average_rating}</Text>
-        <Text style={styles.title}>{product.ratings_count}</Text>
-        <Text style={styles.title}>{product.type}</Text> */}
-        {/* <Text style={styles.title}>{product.special_ingredient}</Text> */}
         <Text style={styles.price}>${product.price}</Text>
       </Pressable>
     </Link>

@@ -15,6 +15,7 @@ import { useCart } from "../providers/CartProvider";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { defaultPizzaImage } from "./ProductListItem_Admin";
+import RemoteImage from "./RemoteImage";
 
 export default function CartIt({ cartItem }) {
   const { updateQuantity } = useCart();
@@ -29,9 +30,17 @@ export default function CartIt({ cartItem }) {
         style={styles.CartItemSingleLinearGradient}
       >
         <View>
-          <Image
+          {/* <Image
             source={{ uri: cartItem.product.image || defaultPizzaImage }}
             style={styles.CartItemSingleImage}
+          /> */}
+          <RemoteImage
+            path={cartItem.product.image}
+            fallback={
+              "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+            }
+            style={styles.CartItemSingleImage}
+            resizeMode="contain"
           />
         </View>
         <View style={styles.CartItemSingleInfoContainer}>

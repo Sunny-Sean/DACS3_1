@@ -3,11 +3,23 @@ import { StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../constants/theme2";
 import ProfilePic from "./ProfilePic";
 import GradientBGIcon from "./GradientBGIcon";
+import { useSegments } from "expo-router";
 
 const HeaderBar = ({ title }) => {
+  const segment = useSegments();
+  const disNone = segment[2] === "home" && segment[1] === "menu";
   return (
     <View style={styles.HeaderContainer}>
-      <GradientBGIcon name="home" color="#230c02" size={FONTSIZE.size_16} />
+      {disNone ? (
+        <GradientBGIcon name="home" color="#230c02" size={FONTSIZE.size_16} />
+      ) : (
+        <GradientBGIcon
+          name="arrow-back"
+          color="#230c02"
+          size={FONTSIZE.size_16}
+        />
+      )}
+
       <Text style={styles.HeaderText}>{title}</Text>
       <ProfilePic />
     </View>
@@ -28,5 +40,7 @@ const styles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
     color: "#230C02",
     fontWeight: "bold",
+    textAlign: "center",
+    // flex: 1,
   },
 });

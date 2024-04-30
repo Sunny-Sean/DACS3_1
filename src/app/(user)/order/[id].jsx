@@ -5,18 +5,20 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  StyleSheet,
 } from "react-native";
-import OrderListItem from "../../../components/OrderListItem_Admin";
-import OrderItemListItem from "../../../components/OrderItemListItem_Admin";
+import OrderListItem from "../../../components/OrderListItem_User";
+import OrderItemListItem from "../../../components/OrderItemListItem_User";
 import { useOrderDetails } from "../../../api/orders";
-// import { useUpdateOrderSubscription } from "../../../api/orders/subscriptions";
+import HeaderBar from "../../../components/HeaderBar";
+import { useUpdateOrderSubscription } from "../../../api/orders/subscriptions";
 
 export default function OrderDetailsScreen() {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
 
   const { data: order, error, isLoading } = useOrderDetails(id);
-  //   useUpdateOrderSubscription(id);
+  useUpdateOrderSubscription(id);
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -28,8 +30,9 @@ export default function OrderDetailsScreen() {
 
   //   console.log(order);
   return (
-    <View style={{ padding: 10, gap: 20, flex: 1 }}>
-      <Stack.Screen options={{ title: `Ordern #${id}` }} />
+    <View style={styles.ScreenContainer}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <HeaderBar title="Order History" />
 
       <FlatList
         data={order.order_items}
@@ -40,3 +43,10 @@ export default function OrderDetailsScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  ScreenContainer: {
+    flex: 1,
+    backgroundColor: "#EEDCC6",
+  },
+});

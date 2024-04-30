@@ -90,3 +90,31 @@ export function useInsertOrder() {
     },
   });
 }
+
+// Cập nhật trạng thái đơn hàng
+export function useUpdateOrder() {
+  // queryClientL: tương tác và thực hiện truy vấn
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn({ id, updatedFields }) {
+      const { error, data: updatedProduct } = await supabase
+        .from("orders")
+        .update(updatedFields)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      return updatedProduct;
+    },
+
+    // Sau khi them thanh cong thi tai lai du lieu
+    async onSuccess(_, { id }) {
+      await queryClient.invalidateQueries(["orders"]);
+      await queryClient.invalidateQueries(["orders", id]);
+    },
+  });
+}

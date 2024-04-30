@@ -29,11 +29,9 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const segment = useSegments();
   // console.log(segment);
-  // console.log(segment[2]);
-  const disNone = segment[2] === "[id]";
-  // const disNone3 = segment == ["(user)", "menu", "[id]"];
-  // const disNone2 = `/${segment[0]}/menu/${id}`;
-  // console.log(disNone3);
+  const disNone =
+    (segment[2] === "[id]" && segment[1] === "menu") ||
+    segment[1] === "payment";
 
   return (
     <Tabs
@@ -46,7 +44,7 @@ export default function TabLayout() {
         },
       }}
     >
-      <Tabs.Screen name="index" options={{ href: null }} />
+      <Tabs.Screen name="index" options={{ href: null, headerShown: false }} />
 
       <Tabs.Screen
         name="menu"
@@ -67,15 +65,6 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="order2"
-        options={{
-          title: "Orders",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
         name="payment"
         options={{
           title: "Payment Screen",
@@ -84,6 +73,14 @@ export default function TabLayout() {
             <TabBarIcon name="credit-card" color="#FFFFFF" />
           ),
           href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>

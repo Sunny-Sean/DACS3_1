@@ -10,7 +10,7 @@ import {
 import orders from "../../../../assets/data/orders";
 import OrderListItem from "../../../components/OrderListItem_Admin";
 import OrderItemListItem from "../../../components/OrderItemListItem_Admin";
-import { useOrderDetails } from "../../../api/orders";
+import { useOrderDetails, useUpdateOrder } from "../../../api/orders";
 import Colors from "../../../constants/Colors";
 
 export default function OrderDetailsScreen() {
@@ -20,7 +20,12 @@ export default function OrderDetailsScreen() {
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
 
   const { data: order, error, isLoading } = useOrderDetails(id);
-  // useUpdateOrderSubscription(id);
+  const { mutate: updateOrder } = useUpdateOrder();
+
+  // Cập nhật trạng thái đơn hàng
+  function updateStatus(status) {
+    updateOrder({ id: id, updatedFields: { status } });
+  }
 
   if (isLoading) {
     return <ActivityIndicator />;

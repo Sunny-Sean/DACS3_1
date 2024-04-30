@@ -16,6 +16,7 @@ import HeaderBar from "../../../components/HeaderBar";
 import ProductCard from "../../../components/ProductCard";
 import { COLORS } from "../../../constants/theme2";
 import { supabase } from "../../../lib/supabase";
+import { Stack } from "expo-router";
 
 function getCategoriesFromData(data) {
   let temp = {};
@@ -169,6 +170,7 @@ export default function MenuScreen() {
 
   return (
     <View style={styles.ScreenContainer}>
+      <Stack.Screen options={{ headerShown: false }} />
       <StatusBar backgroundColor={COLORS.primaryBlackHex} hidden={true} />
       <ScrollView
         showsVerticalScrollIndicator={false}

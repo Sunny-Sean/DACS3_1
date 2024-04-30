@@ -17,7 +17,6 @@ function OrderItemCard({
     <LinearGradient
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      // colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
       colors={["#f5dab5", "#b39c7f"]}
       style={styles.CardLinearGradient}
     >
@@ -33,25 +32,13 @@ function OrderItemCard({
           </View>
         </View>
         <View>
-          <Text style={styles.CardCurrency}>
-            {/* $<Text style={styles.CardPrice}>{ItemPrice}</Text> */}
-          </Text>
+          <Text style={styles.CardCurrency}></Text>
         </View>
       </View>
-      <View
-        style={styles.CardTableRow}
-        //   onPress={() => {
-        //     navigationH;
-        //   }}
-      >
+      <View style={styles.CardTableRow}>
         <View style={styles.CardTableRow}>
           <View style={styles.SizeBoxLeft}>
-            <Text
-              // style={[styles.SizeText, { fontSize: type === "Bean" ? 12 : 14 }]}
-              style={[styles.SizeText, { fontSize: 12 }]}
-            >
-              {size}
-            </Text>
+            <Text style={[styles.SizeText, { fontSize: 12 }]}>{size}</Text>
           </View>
           <View style={styles.PriceBoxRight}>
             <Text style={styles.PriceCurrence}>

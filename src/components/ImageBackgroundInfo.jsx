@@ -18,6 +18,7 @@ import {
 } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { defaultPizzaImage } from "./ProductListItem_Admin";
+import RemoteImage from "./RemoteImage";
 
 function ImageBackgroundInfo({
   EnableBackHandler,
@@ -37,7 +38,7 @@ function ImageBackgroundInfo({
   const router = useRouter();
   return (
     <View>
-      <ImageBackground
+      {/* <ImageBackground
         source={{ uri: image || defaultPizzaImage }}
         style={styles.ItemBackgroundImage}
       >
@@ -63,11 +64,7 @@ function ImageBackgroundInfo({
                 AAA
               </Text>
             </Pressable>
-            <TouchableOpacity
-            // onPress={() => {
-            //   ToggleFavourite(favourite, type, id);
-            // }}
-            >
+            <TouchableOpacity>
               <GradientBGIcon
                 name="heart"
                 color={
@@ -102,22 +99,10 @@ function ImageBackgroundInfo({
           <View style={styles.ImageInfoInnerContainer}>
             <View style={styles.InfoContainerRow}>
               <View>
-                <Text
-                  style={[
-                    styles.ItemTitleText,
-                    // { color: type === "Bread" ? "#d25018" : "#230C02" },
-                    { color: "#d25018" },
-                  ]}
-                >
+                <Text style={[styles.ItemTitleText, { color: "#d25018" }]}>
                   {name}
                 </Text>
-                <Text
-                  style={[
-                    styles.ItemSubtitleText,
-                    // { color: type === "Bread" ? "#d25018" : "#230C02" },
-                    { color: "#d25018" },
-                  ]}
-                >
+                <Text style={[styles.ItemSubtitleText, { color: "#d25018" }]}>
                   {special_ingredient}
                 </Text>
               </View>
@@ -184,7 +169,68 @@ function ImageBackgroundInfo({
             </View>
           </View>
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
+      <RemoteImage
+        path={image}
+        fallback={
+          "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+        }
+        style={styles.ItemBackgroundImage}
+        resizeMode="contain"
+      >
+        {EnableBackHandler ? (
+          <View style={styles.ImageHeaderBarContainerWithBack}>
+            <Pressable
+              onPress={() => router.back()}
+              style={{ flexDirection: "row" }}
+            >
+              <GradientBGIcon
+                name="arrow-back"
+                color={COLORS.primaryLightGreyHex}
+                size={16}
+                style={{ width: 100, height: 100 }}
+              />
+              <Text
+                style={{
+                  marginLeft: -30,
+                  marginTop: 12,
+                  opacity: 0,
+                }}
+              >
+                AAA
+              </Text>
+            </Pressable>
+            <TouchableOpacity>
+              <GradientBGIcon
+                name="heart"
+                color={
+                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  COLORS.primaryLightGreyHex
+                }
+                size={16}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.ImageHeaderBarContainerWithoutBack}>
+            <TouchableOpacity
+              onPress={() => {
+                ToggleFavourite();
+                // ToggleFavourite(favourite, type, id);
+              }}
+            >
+              <GradientBGIcon
+                name="heart"
+                color={
+                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
+                  COLORS.primaryLightGreyHex
+                }
+                size={16}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+      </RemoteImage>
     </View>
   );
 }

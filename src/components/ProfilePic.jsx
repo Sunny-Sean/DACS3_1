@@ -10,8 +10,7 @@ function ProfilePic({ name, color, size }) {
       <Pressable style={styles.ImageContainer}>
         <Image
           style={styles.Image}
-          // source={{ uri: "../assets/app_images/avatar.png" }}
-          source={require("../assets/app_images/chibi2.jpg")}
+          source={require("../assets/app_images/cart.png")}
         />
       </Pressable>
     </Link>

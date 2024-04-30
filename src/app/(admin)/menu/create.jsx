@@ -14,9 +14,6 @@ import * as ImagePicker from "expo-image-picker";
 import Button from "../../../components/Button";
 import { defaultPizzaImage } from "../../../components/ProductListItem_Admin";
 
-import { randomUUID } from "expo-crypto";
-import { decode } from "base64-arraybuffer";
-
 import Colors from "../../../constants/Colors";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
@@ -25,6 +22,11 @@ import {
   useProduct,
   useUpdateProduct,
 } from "../../../api/products";
+
+import * as FileSystem from "expo-file-system";
+import { randomUUID } from "expo-crypto";
+import { decode } from "base64-arraybuffer";
+import { supabase } from "../../../lib/supabase";
 
 function CreateProductScreen() {
   const [name, setName] = useState("");
@@ -132,11 +134,13 @@ function CreateProductScreen() {
     return true;
   }
 
-  function onCreate() {
+  async function onCreate() {
     // Xác thực đầu vào sai thì return
     if (!validateInput()) {
       return;
     }
+
+    const imagePath = await uploadImage();
 
     // console.warn("Creating product: ", name);
 
@@ -145,7 +149,7 @@ function CreateProductScreen() {
       {
         name,
         price: parseFloat(price),
-        image,
+        image: imagePath,
         description,
         roasted,
         ingredients,
@@ -163,11 +167,13 @@ function CreateProductScreen() {
     );
   }
 
-  function onUpdate() {
+  async function onUpdate() {
     // Xác thực đầu vào sai thì return
     if (!validateInput()) {
       return;
     }
+
+    const imagePath = await uploadImage();
 
     // console.warn("Updating product: ");
 
@@ -177,7 +183,7 @@ function CreateProductScreen() {
         id,
         name,
         price: parseFloat(price),
-        image,
+        image: imagePath,
         description,
         roasted,
         ingredients,
@@ -239,6 +245,28 @@ function CreateProductScreen() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+    }
+  };
+
+  // upload hình ảnh lên Supabase Storage
+  const uploadImage = async () => {
+    if (!image?.startsWith("file://")) {
+      return;
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: "base64",
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = "image/png";
+    const { data, error } = await supabase.storage
+      .from("product-images")
+      .upload(filePath, decode(base64), { contentType });
+
+    console.log(error);
+
+    if (data) {
+      return data.path;
     }
   };
 
