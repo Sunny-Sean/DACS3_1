@@ -52,16 +52,22 @@ function LoginPage() {
     <View
       style={{
         backgroundColor: COLORS.white,
+        // backgroundColor: "#EEDCC6",
         flex: 1,
         justifyContent: "center",
       }}
     >
-      <Stack.Screen options={{ title: "Login" }} />
+      <Stack.Screen options={{ title: "Login", headerShown: false }} />
       <View style={{ marginHorizontal: 20, marginTop: 50 }}>
         <LottieView
           autoPlay
           ref={animation}
-          style={{ width: "100%", height: SIZES.height / 3.2 }}
+          style={{
+            width: "100%",
+            height: SIZES.height / 3.2,
+            // backgroundColor: "#EEDCC6",
+            // color: "##EEDCC6",
+          }}
           source={require("../../../assets/anime/delivery.json")}
         />
         <Text style={styles.titleLogin}>Foodly App</Text>
@@ -193,7 +199,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 60,
     fontWeight: "bold",
     fontSize: 35,
-    color: COLORS.primary,
+    color: "#EEDCC6",
   },
 
   wrapper: {

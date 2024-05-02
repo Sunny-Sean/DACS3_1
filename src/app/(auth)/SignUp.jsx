@@ -53,7 +53,7 @@ function SignUp() {
         justifyContent: "center",
       }}
     >
-      <Stack.Screen options={{ title: "SignUp" }} />
+      <Stack.Screen options={{ title: "Login", headerShown: false }} />
       <View style={{ marginHorizontal: 20, marginTop: 50 }}>
         <LottieView
           autoPlay
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 35,
     color: COLORS.primary,
+    color: "#EEDCC6",
   },
 
   wrapper: {

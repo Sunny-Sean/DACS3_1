@@ -12,6 +12,7 @@ import { Stack } from "expo-router";
 
 export default function OrderScreen() {
   const { data: orders, isLoading, error } = useMyOrderList();
+  // console.log(orders);
 
   if (isLoading) {
     return <ActivityIndicator />;

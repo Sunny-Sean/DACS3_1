@@ -7,7 +7,9 @@ import { useSegments } from "expo-router";
 
 const HeaderBar = ({ title }) => {
   const segment = useSegments();
+  console.log(segment);
   const disNone = segment[2] === "home" && segment[1] === "menu";
+  const disNone2 = segment[1] === "profile2";
   return (
     <View style={styles.HeaderContainer}>
       {disNone ? (
