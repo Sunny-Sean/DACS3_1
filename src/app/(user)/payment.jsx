@@ -16,6 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome6, FontAwesome5 } from "@expo/vector-icons";
 import { useCart } from "../../providers/CartProvider";
+import { useRouter } from "expo-router";
 
 const PaymentList = [
   {
@@ -54,12 +55,14 @@ function payment() {
   const { total, checkout } = useCart();
   const [paymentMode, setPaymentMode] = useState("Credit Card");
   const [showAnimation, setShowAnimation] = useState(false);
+  const router = useRouter();
 
   function buttonPressHandler() {
     setShowAnimation(true);
     setTimeout(() => {
       setShowAnimation(false);
       checkout();
+      // router.push("/(user)/delivery");
     }, 2000);
   }
   return (

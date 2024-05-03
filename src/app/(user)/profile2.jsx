@@ -14,11 +14,6 @@ import HeaderBar from "../../components/HeaderBar";
 import { supabase } from "../../lib/supabase";
 
 const profile_picture = require("../../assets/profile/ava.png");
-const account = require("../../assets/profile/account.png");
-const help = require("../../assets/profile/help.png");
-const logout = require("../../assets/profile/logout.png");
-const notification = require("../../assets/profile/notifications.png");
-const setting = require("../../assets/profile/settings.png");
 
 const ProfileScreen2 = () => {
   return (

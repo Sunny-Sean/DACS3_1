@@ -28,10 +28,12 @@ export default function TabLayout() {
   // const { id } = useLocalSearchParams();
   const colorScheme = useColorScheme();
   const segment = useSegments();
-  // console.log(segment);
+  console.log(segment);
   const disNone =
     (segment[2] === "[id]" && segment[1] === "menu") ||
-    segment[1] === "payment";
+    segment[1] === "payment" ||
+    (segment[1] === "delivery" && segment[0] === "(user)") ||
+    (segment[1] === "order" && segment[2] === "[id]");
 
   return (
     <Tabs
@@ -84,11 +86,21 @@ export default function TabLayout() {
           href: null,
         }}
       />
+
       <Tabs.Screen
         name="profile2"
         options={{
           title: "Profile",
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="delivery"
+        options={{
+          title: "Delivery",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          href: null,
         }}
       />
     </Tabs>
