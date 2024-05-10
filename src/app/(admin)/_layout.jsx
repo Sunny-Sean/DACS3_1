@@ -8,9 +8,14 @@ function TabBarIcon(props) {
 }
 
 export default function TabLayout() {
-  const { isAdmin } = useAuth();
-  if (!isAdmin) {
-    return <Redirect href={"/"} />;
+  const { isAdmin, profile } = useAuth();
+
+  // if (!(profile?.group === "ADMIN")) {
+  //   return <Redirect href={"/(user)"} />;
+  // }
+
+  if (!profile || profile.group !== "ADMIN") {
+    return <Redirect href="/" />;
   }
   return (
     <Tabs

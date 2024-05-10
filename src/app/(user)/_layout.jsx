@@ -20,15 +20,19 @@ function TabBarIcon(props) {
 }
 
 export default function TabLayout() {
-  const { session } = useAuth();
+  const { session, isAdmin } = useAuth();
 
   if (!session) {
-    return <Redirect href={"/"} />;
+    return <Redirect href={"/LoginPage"} />;
   }
+
+  // if (!session) {
+  //   return <Redirect href={"/"} />;
+  // }
   // const { id } = useLocalSearchParams();
   const colorScheme = useColorScheme();
   const segment = useSegments();
-  console.log(segment);
+  // console.log(segment);
   const disNone =
     (segment[2] === "[id]" && segment[1] === "menu") ||
     segment[1] === "payment" ||

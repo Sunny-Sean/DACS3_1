@@ -63,35 +63,7 @@ export default function MenuScreen() {
   };
 
   const ListRef = useRef();
-  // const productList = useStore((state) => state.productList);
   const [searchText, setSearchText] = useState("");
-  // const [categories, setCategories] = useState(
-  //   getCategoriesFromData(productList)
-  // );
-
-  function searchProduct() {
-    if (searchText !== "") {
-      ListRef?.current?.scrollToOffset({
-        animated: true,
-        offset: 0,
-      });
-      setCategoryIndex({ index: 0, category: categories[0] });
-      setsortedProduct([
-        ...products?.filter((item) =>
-          item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-        ),
-      ]);
-    }
-
-    if (searchText == "") {
-      setsortedProduct([
-        ...products?.filter((item) =>
-          item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-        ),
-      ]);
-    }
-  }
-
   function resetsearchProduct() {
     ListRef?.current?.scrollToOffset({
       animated: true,
@@ -109,11 +81,7 @@ export default function MenuScreen() {
 
   const [categories, setCategories] = useState([]);
   const [categoryIndex, setCategoryIndex] = useState({});
-  const [sortedProduct, setsortedProduct] = useState(
-    // getProductList(categoryIndex.category, productList)
-    // getProductList(categoryIndex.category, products)
-    []
-  );
+  const [sortedProduct, setsortedProduct] = useState([]);
 
   useEffect(() => {}, [isLoading, products]);
 
@@ -133,23 +101,8 @@ export default function MenuScreen() {
     });
   }, [categories]);
 
-  // useEffect(() => {
-  //   if (products && categoryIndex) {
-  //     const filteredProducts = products.filter((item) =>
-  //       item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
-  //     );
-  //     setsortedProduct(
-  //       getProductList(categoryIndex.category, filteredProducts)
-  //     );
-  //   }
-
-  //   if (searchText === "") {
-  //     setsortedProduct(getProductList(categoryIndex.category, products));
-  //   }
-  // }, [products, categoryIndex, searchText]);
-
   useEffect(() => {
-    if (!products) return; // Trả về sớm nếu products chưa được lấy
+    if (!products) return; // Trả về nếu products chưa được lấy
 
     const filteredProducts = searchText
       ? products.filter((item) =>

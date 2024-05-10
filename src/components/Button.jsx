@@ -1,10 +1,16 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import { forwardRef } from "react";
+import { color } from "react-native-elements/dist/helpers";
 
-const Button = forwardRef(({ text, ...pressableProps }, ref) => {
+const Button = forwardRef(({ text, disabled, ...pressableProps }, ref) => {
   return (
-    <Pressable ref={ref} {...pressableProps} style={styles.container}>
+    <Pressable
+      ref={ref}
+      {...pressableProps}
+      disabled={disabled}
+      style={[styles.container]}
+    >
       <Text style={styles.text}>{text}</Text>
     </Pressable>
   );

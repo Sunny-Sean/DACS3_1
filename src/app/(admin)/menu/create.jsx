@@ -40,6 +40,7 @@ function CreateProductScreen() {
   const [price, setPrice] = useState("");
   const [errors, setErrors] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Lấy id từ url, nếu tồn tại id thì update
   const { id: idString } = useLocalSearchParams();
@@ -135,6 +136,7 @@ function CreateProductScreen() {
   }
 
   async function onCreate() {
+    setLoading(true);
     // Xác thực đầu vào sai thì return
     if (!validateInput()) {
       return;
@@ -165,6 +167,7 @@ function CreateProductScreen() {
         },
       }
     );
+    setLoading(false);
   }
 
   async function onUpdate() {
@@ -203,9 +206,13 @@ function CreateProductScreen() {
 
   function onSubmit() {
     if (isUpdating) {
+      setLoading(true);
       onUpdate();
+      setLoading(false);
     } else {
+      setLoading(true);
       onCreate();
+      setLoading(false);
     }
   }
 
@@ -366,7 +373,19 @@ function CreateProductScreen() {
         />
 
         <Text style={{ color: "red" }}>{errors}</Text>
-        <Button onPress={onSubmit} text={isUpdating ? "Update" : "Create"} />
+        <Button
+          onPress={onSubmit}
+          text={
+            isUpdating
+              ? loading
+                ? "Updating"
+                : "Update"
+              : loading
+              ? "Creating"
+              : "Create"
+          }
+          disabled={loading}
+        />
         {isUpdating && (
           <Text onPress={confirmDelete} style={styles.textButton}>
             Delete
