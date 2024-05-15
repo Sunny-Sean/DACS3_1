@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome6, FontAwesome5 } from "@expo/vector-icons";
 import { useCart } from "../../providers/CartProvider";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 
 const PaymentList = [
   {
@@ -68,7 +68,7 @@ function payment() {
   return (
     <View style={styles.ScreentContainer}>
       <StatusBar backgroundColor={COLORS.primaryBlackHex} hidden={true} />
-
+      <Stack.Screen options={{ headerShown: false }} />
       {showAnimation ? (
         <PopUpAnimation
           style={styles.LottieAnimation}

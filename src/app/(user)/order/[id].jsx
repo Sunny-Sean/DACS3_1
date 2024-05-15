@@ -14,6 +14,7 @@ import { useOrderDetails } from "../../../api/orders";
 import HeaderBar from "../../../components/HeaderBar";
 import { useUpdateOrderSubscription } from "../../../api/orders/subscriptions";
 import { COLORS } from "../../../constants/theme2";
+import LoadingP from "../../../components/LoadingP";
 
 export default function OrderDetailsScreen() {
   const { id: idString } = useLocalSearchParams();
@@ -25,7 +26,8 @@ export default function OrderDetailsScreen() {
   useUpdateOrderSubscription(id);
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    // return <ActivityIndicator />;
+    return <LoadingP />;
   }
 
   if (error) {
@@ -36,7 +38,7 @@ export default function OrderDetailsScreen() {
   return (
     <View style={styles.ScreenContainer}>
       <Stack.Screen options={{ headerShown: false }} />
-      <HeaderBar title="Order History" />
+      <HeaderBar title="Order History" id={order.id} />
 
       <FlatList
         data={order.order_items}
@@ -44,12 +46,15 @@ export default function OrderDetailsScreen() {
         contentContainerStyle={{ gap: 10 }}
         ListHeaderComponent={() => <OrderListItem order={order} />}
       />
-      <TouchableOpacity
-        style={styles.DownloadButton}
-        onPress={() => router.push("/(user)/delivery")}
-      >
-        <Text style={styles.ButtonText}>Delivery</Text>
-      </TouchableOpacity>
+
+      {order.status !== "Delivered" ? (
+        <TouchableOpacity
+          style={styles.DownloadButton}
+          onPress={() => router.push("/(user)/delivery")}
+        >
+          <Text style={styles.ButtonText}>Delivery</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }

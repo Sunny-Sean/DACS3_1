@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -24,14 +23,6 @@ function OrderListItem({ order }) {
 
   const [showAnimation, setShowAnimation] = useState(false);
 
-  function navigationHandler() {}
-
-  function buttonPressHandler() {
-    setShowAnimation(true);
-    setTimeout(() => {
-      setShowAnimation(false);
-    }, 2000);
-  }
   return (
     <Link href={`/${segments[0]}/order/${order.id}`} asChild>
       <Pressable style={styles.ScreenContainer}>
@@ -87,7 +78,6 @@ function OrderListItem({ order }) {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    // backgroundColor: COLORS.primaryBlackHex,
     backgroundColor: "#EEDCC6",
   },
   LottieAnimation: {

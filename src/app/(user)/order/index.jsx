@@ -9,21 +9,23 @@ import OrderListItem from "../../../components/OrderListItem_User";
 import { useMyOrderList } from "../../../api/orders";
 import HeaderBar from "../../../components/HeaderBar";
 import { Stack } from "expo-router";
+import LoadingP from "../../../components/LoadingP";
 
 export default function OrderScreen() {
   const { data: orders, isLoading, error } = useMyOrderList();
   // console.log(orders);
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    // return <ActivityIndicator />;
+    return <LoadingP />;
   }
   if (error) {
     return <Text>Failed to fetch</Text>;
   }
   return (
     <View style={styles.ScreenContainer}>
-      <HeaderBar title="Order History" />
       <Stack.Screen options={{ headerShown: false }} />
+      <HeaderBar title="Order History" />
       <FlatList
         data={orders}
         renderItem={({ item }) => <OrderListItem order={item} />}

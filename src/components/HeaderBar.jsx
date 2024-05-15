@@ -5,7 +5,7 @@ import ProfilePic from "./ProfilePic";
 import GradientBGIcon from "./GradientBGIcon";
 import { useSegments } from "expo-router";
 
-const HeaderBar = ({ title }) => {
+const HeaderBar = ({ title, id }) => {
   const segment = useSegments();
   // console.log(segment);
   const disNone = segment[2] === "home" && segment[1] === "menu";
@@ -22,7 +22,7 @@ const HeaderBar = ({ title }) => {
         />
       )}
 
-      <Text style={styles.HeaderText}>{title}</Text>
+      <Text style={styles.HeaderText}>{id ? `Order #${id}` : title}</Text>
       <ProfilePic />
     </View>
   );

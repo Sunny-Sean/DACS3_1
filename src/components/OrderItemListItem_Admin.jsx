@@ -3,6 +3,7 @@ import React from "react";
 import Colors from "../constants/Colors";
 import { defaultPizzaImage } from "./ProductListItem_Admin";
 import { Link, useSegments } from "expo-router";
+import RemoteImage from "./RemoteImage";
 
 function OrderItemListItem_Admin({ item }) {
   const segment = useSegments();
@@ -12,8 +13,16 @@ function OrderItemListItem_Admin({ item }) {
   return (
     <Link href={`/${segment[0]}/menu/${item.products.id}`} asChild>
       <Pressable style={styles.container}>
-        <Image
+        {/* <Image
           source={{ uri: item.products.image || defaultPizzaImage }}
+          style={styles.image}
+          resizeMode="contain"
+        /> */}
+        <RemoteImage
+          path={item.products.image}
+          fallback={
+            "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+          }
           style={styles.image}
           resizeMode="contain"
         />

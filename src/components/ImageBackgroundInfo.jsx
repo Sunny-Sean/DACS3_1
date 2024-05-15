@@ -38,138 +38,6 @@ function ImageBackgroundInfo({
   const router = useRouter();
   return (
     <View>
-      {/* <ImageBackground
-        source={{ uri: image || defaultPizzaImage }}
-        style={styles.ItemBackgroundImage}
-      >
-        {EnableBackHandler ? (
-          <View style={styles.ImageHeaderBarContainerWithBack}>
-            <Pressable
-              onPress={() => router.back()}
-              style={{ flexDirection: "row" }}
-            >
-              <GradientBGIcon
-                name="arrow-back"
-                color={COLORS.primaryLightGreyHex}
-                size={16}
-                style={{ width: 100, height: 100 }}
-              />
-              <Text
-                style={{
-                  marginLeft: -30,
-                  marginTop: 12,
-                  opacity: 0,
-                }}
-              >
-                AAA
-              </Text>
-            </Pressable>
-            <TouchableOpacity>
-              <GradientBGIcon
-                name="heart"
-                color={
-                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
-                  COLORS.primaryLightGreyHex
-                }
-                size={16}
-              />
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.ImageHeaderBarContainerWithoutBack}>
-            <TouchableOpacity
-              onPress={() => {
-                ToggleFavourite();
-                // ToggleFavourite(favourite, type, id);
-              }}
-            >
-              <GradientBGIcon
-                name="heart"
-                color={
-                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
-                  COLORS.primaryLightGreyHex
-                }
-                size={16}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <View style={styles.ImageInfoOuterContainer}>
-          <View style={styles.ImageInfoInnerContainer}>
-            <View style={styles.InfoContainerRow}>
-              <View>
-                <Text style={[styles.ItemTitleText, { color: "#d25018" }]}>
-                  {name}
-                </Text>
-                <Text style={[styles.ItemSubtitleText, { color: "#d25018" }]}>
-                  {special_ingredient}
-                </Text>
-              </View>
-              <View style={styles.ItemPropertiesContainer}>
-                <View style={styles.ProperFirst}>
-                  <MaterialCommunityIcons
-                    name={type === "Bread" ? "cake" : "pizza"}
-                    size={type === "Bread" ? 18 : 24}
-                    // color={COLORS.primaryOrangeHex}
-                    color="#230C02"
-                  />
-                  <Text
-                    style={[
-                      styles.PropertyTextFirst,
-                      { marginTop: type === "Bread" ? 6 : 0 },
-                    ]}
-                  >
-                    {type}
-                  </Text>
-                </View>
-                <View style={styles.ProperFirst}>
-                  <FontAwesome5
-                    name={type === "Bread" ? "utensil-spoon" : "hand-paper"}
-                    size={16}
-                    // color={COLORS.primaryOrangeHex}
-                    color="#230C02"
-                  />
-                  <Text style={styles.PropertyTextLast}>{ingredients}</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.InfoContainerRow}>
-              <View style={styles.RatingContainer}>
-                <AntDesign
-                  name="star"
-                  size={20}
-                  color={COLORS.primaryOrangeHex}
-                  // color="#693a27"
-                />
-                <Text
-                  style={[
-                    styles.RatingText,
-                    // { color: type === "Bread" ? "#d25018" : "#230C02" },
-                    { color: "#d25018" },
-                  ]}
-                >
-                  {average_rating}
-                </Text>
-                <Text
-                  style={[
-                    styles.RatingCountText,
-                    // { color: type === "Bread" ? "#d25018" : "#230C02" },
-                    { color: "#d25018" },
-                  ]}
-                >
-                  ({ratings_count})
-                </Text>
-              </View>
-              <View style={styles.RoastedContainer}>
-                <Text style={styles.RoastedText} onPress={() => router.back()}>
-                  {roasted}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </ImageBackground> */}
       <RemoteImage
         path={image}
         fallback={
@@ -200,7 +68,7 @@ function ImageBackgroundInfo({
                 AAA
               </Text>
             </Pressable>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <GradientBGIcon
                 name="heart"
                 color={
@@ -209,27 +77,9 @@ function ImageBackgroundInfo({
                 }
                 size={16}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-        ) : (
-          <View style={styles.ImageHeaderBarContainerWithoutBack}>
-            <TouchableOpacity
-              onPress={() => {
-                ToggleFavourite();
-                // ToggleFavourite(favourite, type, id);
-              }}
-            >
-              <GradientBGIcon
-                name="heart"
-                color={
-                  // favourite ? COLORS.primaryRedHex : COLORS.primaryLightGreyHex
-                  COLORS.primaryLightGreyHex
-                }
-                size={16}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+        ) : null}
       </RemoteImage>
     </View>
   );

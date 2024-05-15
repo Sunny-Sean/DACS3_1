@@ -17,7 +17,9 @@ import ProductCard from "../../../components/ProductCard";
 import { COLORS } from "../../../constants/theme2";
 import { supabase } from "../../../lib/supabase";
 import { Stack } from "expo-router";
+import LoadingP from "../../../components/LoadingP";
 
+// Hiển thị danh mục để lọc sản phẩm theo tên
 function getCategoriesFromData(data) {
   let temp = {};
   for (let i = 0; i < data?.length; i++) {
@@ -27,13 +29,13 @@ function getCategoriesFromData(data) {
       temp[data[i]?.name]++;
     }
   }
-  let categories = Object?.keys(temp);
-  categories?.unshift("All");
+  let categories = Object?.keys(temp); // Lấy tất cả các danh mục
+  categories?.unshift("All"); // Thêm "All" vào đầu mảng
   return categories;
 }
 
+// Lấy sản phẩn theo từng danh mục
 function getProductList(category, data) {
-  // console.log("category", category);
   if (category == "All") {
     return data;
   } else {
@@ -43,7 +45,6 @@ function getProductList(category, data) {
 }
 
 export default function MenuScreen() {
-  // const { data: products, error, isLoading } = useProductList();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -56,22 +57,25 @@ export default function MenuScreen() {
       setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
       setCategories(getCategoriesFromData(data) || []); // Cập nhật categories
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); // Ghi nhật ký lỗi để gỡ lỗi
+      console.error("Lỗi khi lấy dữ liệu:", error); //
       setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
       setIsLoading(false); // Reset trạng thái tải
     }
   };
 
-  const ListRef = useRef();
   const [searchText, setSearchText] = useState("");
+
+  const ListRef = useRef();
+
   function resetsearchProduct() {
+    // Cuộn danh sách sản phẩm về đầu:
     ListRef?.current?.scrollToOffset({
       animated: true,
       offset: 0,
     });
+
     setCategoryIndex({ index: 0, category: categories[0] });
-    // setsortedProduct([...productList]);
-    setsortedProduct([...products]);
+    setsortedProduct([...products]); // Sắp xếp thành tất cả sản phẩm
     setSearchText("");
   }
 
@@ -79,14 +83,13 @@ export default function MenuScreen() {
     fetchData();
   }, []);
 
-  const [categories, setCategories] = useState([]);
-  const [categoryIndex, setCategoryIndex] = useState({});
-  const [sortedProduct, setsortedProduct] = useState([]);
+  const [categories, setCategories] = useState([]); // Danh mục
+  const [categoryIndex, setCategoryIndex] = useState({}); // Lưu trữ thông tin về danh mục hiện tại
+  const [sortedProduct, setsortedProduct] = useState([]); // Chứa danh sách sản phẩm đã được lọc và sắp xếp theo danh mục và từ khóa tìm kiếm
 
   useEffect(() => {}, [isLoading, products]);
 
   useEffect(() => {
-    // console.log(categories);
     setCategoryIndex({
       index: 0,
       category: categories[0],
@@ -94,7 +97,6 @@ export default function MenuScreen() {
   }, [searchText]);
 
   useEffect(() => {
-    // console.log(categories);
     setCategoryIndex({
       index: 0,
       category: categories[0],
@@ -114,7 +116,8 @@ export default function MenuScreen() {
   }, [products, categoryIndex, searchText]); // Cập nhật khi products, category hoặc search thay đổi
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    // return <ActivityIndicator />;
+    return <LoadingP />;
   }
 
   if (error) {
@@ -151,7 +154,6 @@ export default function MenuScreen() {
             value={searchText}
             onChangeText={(text) => {
               setSearchText(text);
-              // searchProduct(text);
             }}
             placeholderTextColor={COLORS.primaryWhiteHex}
             style={styles.TextInputContainer}
@@ -171,7 +173,7 @@ export default function MenuScreen() {
             </TouchableOpacity>
           ) : null}
         </View>
-        {/* Category Scroller */}
+        {/* Hiển thị Danh mục Scroller */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -180,18 +182,17 @@ export default function MenuScreen() {
           {categories?.map((data, index) => (
             <View key={index} style={styles.CategoryScrollViewContainer}>
               <TouchableOpacity
+                // Cuộn danh sách sản phẩm về đầu khi click vào danh mụcu mới
                 onPress={() => {
                   ListRef?.current?.scrollToOffset({
                     animated: true,
                     offset: 0,
                   });
+
                   setCategoryIndex({
                     index: index,
                     category: categories[index],
                   });
-                  // setsortedProduct([
-                  //   ...getProductList(categories[index], productList),
-                  // ]);
                   setsortedProduct([
                     ...getProductList(categories[index], products),
                   ]);
@@ -204,7 +205,6 @@ export default function MenuScreen() {
                     categoryIndex?.index == index
                       ? { color: COLORS.primaryOrangeHex }
                       : { color: "#230c02" },
-                    // : { color: COLORS.secondaryLightGreyHex },
                   ]}
                 >
                   {data}
@@ -218,6 +218,7 @@ export default function MenuScreen() {
         </ScrollView>
 
         <Text style={styles.CoffeBeansTitle}>Best Food</Text>
+
         {/* Product FlatList */}
         <FlatList
           ref={ListRef}
@@ -273,7 +274,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 30,
     borderRadius: 20,
-    backgroundColor: COLORS.primaryDarkGreyHex,
     backgroundColor: "#4d3429",
     alignItems: "center",
   },

@@ -17,6 +17,7 @@ import { useCart } from "../../../providers/CartProvider";
 import Button from "../../../components/Button";
 import { useProduct } from "../../../api/products";
 import { ActivityIndicator } from "react-native";
+import LoadingP from "../../../components/LoadingP";
 
 const SIZES = ["S", "M", "L"];
 
@@ -47,7 +48,8 @@ function ProductDetailsScreen() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    // return <ActivityIndicator />;
+    return <LoadingP />;
   }
 
   if (error) {
