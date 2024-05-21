@@ -28,7 +28,6 @@ const RemoteImage = ({ children, path, fallback, ...imageProps }) => {
   }, [path]);
 
   if (!image) {
-    // You can add fallback UI here if needed
   }
 
   return (

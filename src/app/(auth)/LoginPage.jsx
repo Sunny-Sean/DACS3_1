@@ -52,136 +52,140 @@ function LoginPage() {
     <View
       style={{
         backgroundColor: COLORS.white,
-        // backgroundColor: "#EEDCC6",
         flex: 1,
         justifyContent: "center",
       }}
     >
-      <Stack.Screen options={{ title: "Login", headerShown: false }} />
-      <View style={{ marginHorizontal: 20, marginTop: 50 }}>
-        <LottieView
-          autoPlay
-          ref={animation}
-          style={{
-            width: "100%",
-            height: SIZES.height / 3.2,
-            // backgroundColor: "#EEDCC6",
-            // color: "##EEDCC6",
-          }}
-          source={require("../../../assets/anime/delivery.json")}
-        />
-        <Text style={styles.titleLogin}>Foodly App</Text>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={loginFunc}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            touched,
-            handleSubmit,
-            values,
-            errors,
-            isValid,
-            setFieldTouched,
-          }) => (
-            <View>
-              <View style={styles.wrapper}>
-                <Text style={styles.label}>Email</Text>
-                <View
-                  style={styles.inputWrapper(
-                    touched.email ? COLORS.secondary : COLORS.offwhite
-                  )}
-                >
-                  <MaterialCommunityIcons
-                    name="email-outline"
-                    size={20}
-                    color={COLORS.gray}
-                    style={styles.iconStyle}
-                  />
-
-                  <TextInput
-                    placeholder="Enter email"
-                    onFocus={() => {
-                      setFieldTouched("email");
-                    }}
-                    onBlur={() => {
-                      setFieldTouched("email", "");
-                    }}
-                    value={email}
-                    onChangeText={setEmail}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    style={{ flex: 1 }}
-                  />
-                </View>
-                {touched.email && errors.email && (
-                  <Text style={styles.errorMessage}>{errors.email}</Text>
-                )}
-              </View>
-
-              <View style={styles.wrapper}>
-                <Text style={styles.label}>Password</Text>
-                <View
-                  style={styles.inputWrapper(
-                    touched.password ? COLORS.secondary : COLORS.offwhite
-                  )}
-                >
-                  <MaterialCommunityIcons
-                    name="lock-outline"
-                    size={20}
-                    color={COLORS.gray}
-                    style={styles.iconStyle}
-                  />
-
-                  <TextInput
-                    secureTextEntry={obsecureText}
-                    placeholder="Password"
-                    onFocus={() => {
-                      setFieldTouched("password");
-                    }}
-                    onBlur={() => {
-                      setFieldTouched("password", "");
-                    }}
-                    value={password}
-                    onChangeText={setPassword}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    style={{ flex: 1 }}
-                  />
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      setObsecureText(!obsecureText);
-                    }}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.ScrollViewFlex}
+      >
+        <Stack.Screen options={{ title: "Login", headerShown: false }} />
+        <View style={{ marginHorizontal: 20, marginTop: 50 }}>
+          <LottieView
+            autoPlay
+            ref={animation}
+            style={{
+              width: "100%",
+              height: SIZES.height / 3.2,
+              // backgroundColor: "#EEDCC6",
+              // color: "##EEDCC6",
+            }}
+            source={require("../../../assets/anime/delivery.json")}
+          />
+          <Text style={styles.titleLogin}>Foodly App</Text>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={loginFunc}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              touched,
+              handleSubmit,
+              values,
+              errors,
+              isValid,
+              setFieldTouched,
+            }) => (
+              <View>
+                <View style={styles.wrapper}>
+                  <Text style={styles.label}>Email</Text>
+                  <View
+                    style={styles.inputWrapper(
+                      touched.email ? COLORS.secondary : COLORS.offwhite
+                    )}
                   >
                     <MaterialCommunityIcons
-                      name={obsecureText ? "eye-outline" : "eye-off-outline"}
-                      size={18}
+                      name="email-outline"
+                      size={20}
+                      color={COLORS.gray}
+                      style={styles.iconStyle}
                     />
-                  </TouchableOpacity>
+
+                    <TextInput
+                      placeholder="Enter email"
+                      onFocus={() => {
+                        setFieldTouched("email");
+                      }}
+                      onBlur={() => {
+                        setFieldTouched("email", "");
+                      }}
+                      value={email}
+                      onChangeText={setEmail}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      style={{ flex: 1 }}
+                    />
+                  </View>
+                  {touched.email && errors.email && (
+                    <Text style={styles.errorMessage}>{errors.email}</Text>
+                  )}
                 </View>
-                {touched.password && errors.password && (
-                  <Text style={styles.errorMessage}>{errors.password}</Text>
-                )}
+
+                <View style={styles.wrapper}>
+                  <Text style={styles.label}>Password</Text>
+                  <View
+                    style={styles.inputWrapper(
+                      touched.password ? COLORS.secondary : COLORS.offwhite
+                    )}
+                  >
+                    <MaterialCommunityIcons
+                      name="lock-outline"
+                      size={20}
+                      color={COLORS.gray}
+                      style={styles.iconStyle}
+                    />
+
+                    <TextInput
+                      secureTextEntry={obsecureText}
+                      placeholder="Password"
+                      onFocus={() => {
+                        setFieldTouched("password");
+                      }}
+                      onBlur={() => {
+                        setFieldTouched("password", "");
+                      }}
+                      value={password}
+                      onChangeText={setPassword}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      style={{ flex: 1 }}
+                    />
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        setObsecureText(!obsecureText);
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name={obsecureText ? "eye-outline" : "eye-off-outline"}
+                        size={18}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  {touched.password && errors.password && (
+                    <Text style={styles.errorMessage}>{errors.password}</Text>
+                  )}
+                </View>
+
+                <Button
+                  loader={loader}
+                  title={loading ? "Waiting for login..." : "L o g i n"}
+                  onPress={signInWithEmail}
+                  disabled={loading}
+                  isValid={isValid}
+                />
+
+                <Link href="/SignUp" style={styles.registration}>
+                  Create an account
+                </Link>
               </View>
-
-              <Button
-                loader={loader}
-                title={loading ? "Waiting for login..." : "L o g i n"}
-                onPress={signInWithEmail}
-                disabled={loading}
-                isValid={isValid}
-              />
-
-              <Link href="/SignUp" style={styles.registration}>
-                Create an account
-              </Link>
-            </View>
-          )}
-        </Formik>
-      </View>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -235,6 +239,9 @@ const styles = StyleSheet.create({
   registration: {
     marginTop: 20,
     textAlign: "center",
+  },
+  ScrollViewFlex: {
+    flexGrow: 1,
   },
 });
 

@@ -110,7 +110,7 @@ export default function MenuScreen() {
       ? products.filter((item) =>
           item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
         )
-      : [...products]; // Hiển thị tất cả sản phẩm nếu searchText trống hoặc sai
+      : [...products]; // Hiển thị tất cả sản phẩm nếu searchText trống
 
     setsortedProduct(getProductList(categoryIndex.category, filteredProducts));
   }, [products, categoryIndex, searchText]); // Cập nhật khi products, category hoặc search thay đổi

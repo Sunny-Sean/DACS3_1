@@ -69,7 +69,6 @@ function ProductDetailsScreen() {
           image={product?.image}
           type={product.type}
           id={product.id}
-          // favourite={product.favourite}
           name={product.name}
           special_ingredient={product.special_ingredient}
           ingredients={product.ingredients}
@@ -188,7 +187,6 @@ const styles = StyleSheet.create({
   },
   SizeBox: {
     flex: 1,
-    // backgroundColor: COLORS.primaryDarkGreyHex,
     backgroundColor: "#f8dcb9",
     alignItems: "center",
     justifyContent: "center",

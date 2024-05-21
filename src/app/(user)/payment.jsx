@@ -62,7 +62,6 @@ function payment() {
     setTimeout(() => {
       setShowAnimation(false);
       checkout();
-      // router.push("/(user)/delivery");
     }, 2000);
   }
   return (
@@ -80,11 +79,7 @@ function payment() {
         contentContainerStyle={styles.ScrollViewFlex}
       >
         <View style={styles.HeaderContainer}>
-          <TouchableOpacity
-          // onPress={() => {
-          //   navigation.pop();
-          // }}
-          >
+          <TouchableOpacity>
             <GradientBGIcon
               name="arrow-back"
               color={COLORS.primaryLightGreyHex}

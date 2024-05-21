@@ -55,16 +55,6 @@ function ProductCard({
         style={styles.CardLinearGradientContainer}
         colors={["#f5dab5", "#b39c7f"]}
       >
-        {/* <ImageBackground
-          resizeMode="cover"
-          style={styles.CardImageBG}
-          source={{ uri: image || defaultPizzaImage }}
-        >
-          <View style={styles.CardRatingContainer}>
-            <AntDesign name="star" size={16} color={"#230C02"} />
-            <Text style={styles.CardRatingText}>{average_rating}</Text>
-          </View>
-        </ImageBackground> */}
         <RemoteImage
           path={image}
           fallback={

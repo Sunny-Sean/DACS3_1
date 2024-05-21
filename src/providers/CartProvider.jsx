@@ -71,7 +71,8 @@ const CartProvider = ({ children }) => {
     insertOrderItems(orderItems, {
       onSuccess() {
         clearCart();
-        router.push(`/(user)/order/${order.id}`);
+        // router.push(`/(user)/order/${order.id}`);
+        router.push(`/(user)/order`);
       },
     });
   }

@@ -27,6 +27,7 @@ import * as FileSystem from "expo-file-system";
 import { randomUUID } from "expo-crypto";
 import { decode } from "base64-arraybuffer";
 import { supabase } from "../../../lib/supabase";
+import RemoteImage from "../../../components/RemoteImage";
 
 function CreateProductScreen() {
   const [name, setName] = useState("");
@@ -286,14 +287,25 @@ function CreateProductScreen() {
         <Stack.Screen
           options={{ title: isUpdating ? "Update Product" : "Create Product" }}
         />
-        <Image
-          source={{
-            uri:
-              image ||
-              "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png",
-          }}
-          style={styles.image}
-        />
+        {!isUpdating ? (
+          <Image
+            source={{
+              uri:
+                image ||
+                "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png",
+            }}
+            style={styles.image}
+          />
+        ) : (
+          <RemoteImage
+            path={image}
+            fallback={
+              "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+            }
+            style={styles.image}
+            resizeMode="contain"
+          />
+        )}
         <Text onPress={pickImage} style={styles.textButton}>
           Select Image
         </Text>
@@ -403,7 +415,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: "50%",
+    width: "100%",
     aspectRatio: 1,
     alignSelf: "center",
   },

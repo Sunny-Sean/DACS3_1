@@ -19,7 +19,7 @@ function OrderHistoryCard({
   status,
 }) {
   const segment = useSegments();
-  // const { data: order, isLoading, error } = useOrderDetails(id);
+  // const { data: order, isLoading, error } = (id);
   // console.log(order);
   // const { data: orders, isLoading, error } = useMyOrderList();
   // console.log(orders);
