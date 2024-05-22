@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../providers/AuthProvider";
+import { getToday } from "../../utils/helpers";
+import { subDays } from "date-fns";
 
 export function useAdminOrderList({ archived = false }) {
   const statuses = archived ? ["Delivered"] : ["New", "Cooking", "Delivering"];
@@ -115,6 +117,25 @@ export function useUpdateOrder() {
     async onSuccess(_, { id }) {
       await queryClient.invalidateQueries(["orders"]);
       await queryClient.invalidateQueries(["orders", id]);
+    },
+  });
+}
+
+export function getListOrder() {
+  const queryDate = subDays(new Date(), 30).toISOString();
+
+  return useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("created_at, status, total")
+        .gte("created_at", queryDate)
+        .lte("created_at", getToday({ end: true }));
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
     },
   });
 }

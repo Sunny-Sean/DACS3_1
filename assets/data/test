@@ -1,6 +1,3 @@
-const [obsecureText, setObsecureText] = useState(false);
-<TouchableOpacity
-                      onPress={() => {
-                        !obsecureText;
-                      }}
-                    >
+import { subDays } from "date-fns";
+
+const queryDate = subDays(new Date(), 30).toISOString();
