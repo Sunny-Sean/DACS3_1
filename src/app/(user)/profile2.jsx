@@ -41,9 +41,6 @@ const ProfileScreen2 = () => {
         .select("*")
         .eq("id", id)
         .single();
-      // console.log("Data moi: ", data);
-      // console.log("Data sdt: ", data.full_name);
-      // console.log("Data dia chi: ", data.username);
       setSdt(data.full_name);
       setDiaChi(data.username);
       setName(data.avatar_url);

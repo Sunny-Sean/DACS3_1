@@ -1,28 +1,77 @@
-onDataPointClick={({ value, getColor }) =>
-  showMessage({
-    message: `${value}`,
-    description: "You selected this value",
-    backgroundColor: getColor(0.9)
-  })
+export function getListOrder(date) {
+  const queryDate = subDays(new Date(), 30).toISOString();
+  const queryDate2 = subDays(new Date(), date).toISOString();
+
+  return useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("created_at, status, total")
+        .gte("created_at", queryDate2)
+        .lte("created_at", getToday({ end: true }));
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    },
+  });
 }
-formatXLabel={label => label.toUpperCase()}
-/>  
 
+const statistical = () => {
+  const [numDays, setNumDays] = useState("7");
+  const [days, setDays] = useState(7);
+  const { data: thongke, isLoading, error } = getListOrder(days);
+  // const [sodon, setSodon] = useState(0);
+  // const [tongTien, setTongTien] = useState(0);
 
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June"],
-  datasets: [
-    {
-      data: [-50, -20, -2, 86, 71, 100],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})` // optional
-    },
-    {
-      data: [20, 10, 4, 56, 87, 90],
-      color: (opacity = 1) => `rgba(0, 255, 255, ${opacity})` // optional
-    },
-    {
-      data: [30, 90, 67, 54, 10, 2]
-    }
-  ],
-  legend: ["Rainy Days", "Sunny Days", "Snowy Days"] // optional
+  console.log(thongke);
+  console.log(thongke.length);
+
+  const {
+    data: orders,
+    isLoading2,
+    error2,
+  } = useAdminOrderList({ archived: true });
+
+  const handleThongKe = () => {
+    setDays(Number(numDays) || 7);
+  };
+
+  if (isLoading || isLoading2) return <ActivityIndicator />;
+
+  if (error || error2) {
+    return <Text>Faild to fetch data</Text>;
+  }
+
+  const sodon = thongke ? thongke.length : 0;
+  const tongTien = thongke
+    ? thongke.reduce((acc, cur) => acc + cur.total, 0)
+    : 0;
+
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={{ marginLeft: 10 }}>
+        <Text>so don: {sodon}</Text>
+        <Text>Tong Tien: {formatCurrency(tongTien)}</Text>
+
+        <Text>So don da giao: {orders?.length}</Text>
+        <Text style={{ marginBottom: 20 }}>
+          So don dang co: {thongke?.length - orders?.length}
+        </Text>
+      </View>
+
+      <LineChart2 orders={thongke} numDays={days} />
+      <Text style={styles.label}>So ngay can thong ke: </Text>
+      <TextInput
+        value={numDays}
+        onChangeText={setNumDays}
+        style={styles.input}
+        keyboardType="numeric"
+      />
+      <Button text={"Thong ke"} onPress={handleThongKe} />
+    </View>
+  );
 };
+
+export default statistical;

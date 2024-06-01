@@ -121,8 +121,9 @@ export function useUpdateOrder() {
   });
 }
 
-export function getListOrder() {
+export function getListOrder(date) {
   const queryDate = subDays(new Date(), 30).toISOString();
+  const queryDate2 = subDays(new Date(), date).toISOString();
 
   return useQuery({
     queryKey: ["orders"],
@@ -130,7 +131,7 @@ export function getListOrder() {
       const { data, error } = await supabase
         .from("orders")
         .select("created_at, status, total")
-        .gte("created_at", queryDate)
+        .gte("created_at", queryDate2)
         .lte("created_at", getToday({ end: true }));
       if (error) {
         throw new Error(error.message);

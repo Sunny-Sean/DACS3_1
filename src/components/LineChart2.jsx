@@ -6,10 +6,18 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
-import { Dimensions, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import React from "react";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import { formatCurrency } from "../utils/helpers";
 
 export default function LineChart2({ orders, numDays }) {
   // Trả về 1 chuỗi ngày liên tiếp từ numDays-1 tới hôm nay
@@ -18,21 +26,35 @@ export default function LineChart2({ orders, numDays }) {
     end: new Date(),
   });
 
+  if (!orders) {
+    return <ActivityIndicator />;
+  }
+
   const data = allDates.map((date) => {
     return {
       label: format(date, "MMM dd"),
       // Tính tổng totalSales của tất cả booking trong 1 ngày
       totalSales: orders
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.total, 0),
+        ?.filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        ?.reduce((acc, cur) => acc + cur.total, 0),
     };
   });
 
   const labels = data.map((item) => item.label);
   const totalSales = data.map((item) => item.totalSales);
-  console.log(data);
+  // console.log(data);
+
+  // const sodon = orders ? orders.length : 0;
+  // const tongTien = orders ? orders.reduce((acc, cur) => acc + cur.total, 0) : 0;
+  // console.log(orders.length);
   return (
     <View style={{ flex: 1 }}>
+      {/* <Text style={{ marginLeft: 10 }}>so don: {orders.length}</Text>
+      <Text style={{ marginLeft: 10 }}>
+        Tong Tien:{" "}
+        {formatCurrency(orders.reduce((acc, cur) => acc + cur.total, 0))}
+      </Text> */}
+
       <Text style={{ marginLeft: 10 }}>
         {" "}
         Sales from {format(allDates.at(0), "MMMM dd yyyy ")} &mdash;{" "}
