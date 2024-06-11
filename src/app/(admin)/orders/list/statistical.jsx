@@ -42,11 +42,11 @@ const statistical = () => {
       setSodon(thongke.length);
       setTongTien(thongke.reduce((acc, cur) => acc + cur.total, 0));
       setError(error);
-      setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
+      setIsLoading(false);
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); //
-      setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
-      setIsLoading(false); // Reset trạng thái tải
+      console.error("Lỗi khi lấy dữ liệu:", error);
+      setError(error);
+      setIsLoading(false);
     }
   };
 
@@ -73,7 +73,7 @@ const statistical = () => {
       </View>
 
       <LineChart2 orders={thongke2} numDays={days} />
-      <Text style={styles.label}>Number of days to be counted: </Text>
+      <Text style={[styles.label]}>Number of days to be counted: </Text>
       <TextInput
         value={numDays}
         onChangeText={setNumDays}
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   label: {
     color: "gray",
     fontSize: 16,
+    marginLeft: 10,
   },
   input: {
     backgroundColor: "white",
@@ -98,5 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
