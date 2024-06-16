@@ -33,7 +33,6 @@ function ProductCard({
 }) {
   const { addItem } = useCart();
   const segment = useSegments();
-  // const product = products.find((p) => p.id == id);
   const { data: product } = useProduct(id);
 
   const addToCart = () => {

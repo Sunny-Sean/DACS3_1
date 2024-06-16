@@ -30,7 +30,7 @@ function PaymentMethod({ paymentMode, name, icon, isIcon }) {
             />
             <Text style={styles.PaymentTitle}>{name}</Text>
           </View>
-          <Text style={styles.PaymentPrice}>$100.000</Text>
+          <Text style={styles.PaymentPrice}>$999.999</Text>
         </LinearGradient>
       ) : (
         <LinearGradient

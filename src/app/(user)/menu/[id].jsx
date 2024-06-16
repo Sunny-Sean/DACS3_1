@@ -22,8 +22,6 @@ import LoadingP from "../../../components/LoadingP";
 const SIZES = ["S", "M", "L"];
 
 function ProductDetailsScreen() {
-  // const { id } = useLocalSearchParams();
-  // const product = products.find((p) => p.id.toString() === id);
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
 
@@ -114,8 +112,7 @@ function ProductDetailsScreen() {
                     borderColor:
                       size === selectedSize
                         ? COLORS.primaryOrangeHex
-                        : // : COLORS.primaryDarkGreyHex,
-                          "#fbd09c99",
+                        : "#fbd09c99",
                   },
                 ]}
               >
@@ -123,7 +120,6 @@ function ProductDetailsScreen() {
                   style={[
                     styles.SizeText,
                     {
-                      // fontSize: product.type === "Bread" ? 14 : 16,
                       fontSize: 14,
                       color:
                         size === selectedSize

@@ -86,7 +86,8 @@ export function useInsertOrder() {
       return newProduct;
     },
 
-    // Xoa cache cua products va lam moi lai danh sach
+    // cập nhật lại danh sách
+
     async onSuccess() {
       await queryClient.invalidateQueries(["orders"]);
     },

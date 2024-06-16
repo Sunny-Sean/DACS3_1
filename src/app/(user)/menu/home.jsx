@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Dimensions,
   FlatList,
   ScrollView,
@@ -19,7 +18,7 @@ import { supabase } from "../../../lib/supabase";
 import { Stack } from "expo-router";
 import LoadingP from "../../../components/LoadingP";
 
-// Hiển thị danh mục để lọc sản phẩm theo tên
+// hiển thị danh mục theo tên
 function getCategoriesFromData(data) {
   let temp = {};
   for (let i = 0; i < data?.length; i++) {
@@ -29,12 +28,12 @@ function getCategoriesFromData(data) {
       temp[data[i]?.name]++;
     }
   }
-  let categories = Object?.keys(temp); // Lấy tất cả các danh mục
+  let categories = Object?.keys(temp); // lấy tất cả các danh mục
   categories?.unshift("All"); // Thêm "All" vào đầu mảng
   return categories;
 }
 
-// Lấy sản phẩn theo từng danh mục
+// Lọc sản phẩn theo từng danh mục
 function getProductList(category, data) {
   if (category == "All") {
     return data;
@@ -52,14 +51,14 @@ export default function MenuScreen() {
   const fetchData = async () => {
     try {
       const { data, error } = await supabase.from("products").select("*");
-      setProducts(data); // Cập nhật trạng thái products trực tiếp
+      setProducts(data);
       setError(error);
-      setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
-      setCategories(getCategoriesFromData(data) || []); // Cập nhật categories
+      setIsLoading(false);
+      setCategories(getCategoriesFromData(data) || []);
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); //
-      setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
-      setIsLoading(false); // Reset trạng thái tải
+      console.error("Lỗi khi lấy dữ liệu:", error);
+      setError(error);
+      setIsLoading(false);
     }
   };
 
@@ -68,14 +67,14 @@ export default function MenuScreen() {
   const ListRef = useRef();
 
   function resetsearchProduct() {
-    // Cuộn danh sách sản phẩm về đầu:
+    // cuộn danh sách sản phẩm về đầu:
     ListRef?.current?.scrollToOffset({
       animated: true,
       offset: 0,
     });
 
     setCategoryIndex({ index: 0, category: categories[0] });
-    setsortedProduct([...products]); // Sắp xếp thành tất cả sản phẩm
+    setsortedProduct([...products]); // sắp xếp thành all sản phẩm
     setSearchText("");
   }
 
@@ -83,9 +82,9 @@ export default function MenuScreen() {
     fetchData();
   }, []);
 
-  const [categories, setCategories] = useState([]); // Danh mục
-  const [categoryIndex, setCategoryIndex] = useState({}); // Lưu trữ thông tin về danh mục hiện tại
-  const [sortedProduct, setsortedProduct] = useState([]); // Chứa danh sách sản phẩm đã được lọc và sắp xếp theo danh mục và từ khóa tìm kiếm
+  const [categories, setCategories] = useState([]); // chứa all danh mục
+  const [categoryIndex, setCategoryIndex] = useState({}); // chứa vị trí và tên của danh mục đang được chọn
+  const [sortedProduct, setsortedProduct] = useState([]); // chứa sp được lọc
 
   useEffect(() => {}, [isLoading, products]);
 
@@ -103,20 +102,20 @@ export default function MenuScreen() {
     });
   }, [categories]);
 
+  // Tim kiem
   useEffect(() => {
-    if (!products) return; // Trả về nếu products chưa được lấy
+    if (!products) return;
 
     const filteredProducts = searchText
       ? products.filter((item) =>
           item?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
         )
-      : [...products]; // Hiển thị tất cả sản phẩm nếu searchText trống
+      : [...products]; // trả về all sp nếu searchText trống
 
     setsortedProduct(getProductList(categoryIndex.category, filteredProducts));
-  }, [products, categoryIndex, searchText]); // Cập nhật khi products, category hoặc search thay đổi
+  }, [products, categoryIndex, searchText]);
 
   if (isLoading) {
-    // return <ActivityIndicator />;
     return <LoadingP />;
   }
 
@@ -173,6 +172,7 @@ export default function MenuScreen() {
             </TouchableOpacity>
           ) : null}
         </View>
+
         {/* Hiển thị Danh mục Scroller */}
         <ScrollView
           horizontal
@@ -182,7 +182,7 @@ export default function MenuScreen() {
           {categories?.map((data, index) => (
             <View key={index} style={styles.CategoryScrollViewContainer}>
               <TouchableOpacity
-                // Cuộn danh sách sản phẩm về đầu khi click vào danh mụcu mới
+                // cuộn danh sách sản phẩm về đầu khi click vào danh mục mới
                 onPress={() => {
                   ListRef?.current?.scrollToOffset({
                     animated: true,
@@ -322,7 +322,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     // marginTop: 20,
     fontWeight: "600",
-    color: COLORS.secondaryLightGreyHex,
     color: "#230C02",
   },
   InputIcon: {

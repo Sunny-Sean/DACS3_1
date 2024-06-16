@@ -1,77 +1,140 @@
-export function getListOrder(date) {
-  const queryDate = subDays(new Date(), 30).toISOString();
-  const queryDate2 = subDays(new Date(), date).toISOString();
+export function useInsertOrderItems() {
+  return useMutation({
+    async mutationFn(items) {
+      const { error, data: newProduct } = await supabase
+        .from("order_items")
+        .insert(items)
+        .select();
 
-  return useQuery({
-    queryKey: ["orders"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("orders")
-        .select("created_at, status, total")
-        .gte("created_at", queryDate2)
-        .lte("created_at", getToday({ end: true }));
       if (error) {
         throw new Error(error.message);
       }
-      return data;
+      return newProduct;
     },
   });
 }
 
-const statistical = () => {
-  const [numDays, setNumDays] = useState("7");
-  const [days, setDays] = useState(7);
-  const { data: thongke, isLoading, error } = getListOrder(days);
-  // const [sodon, setSodon] = useState(0);
-  // const [tongTien, setTongTien] = useState(0);
+export function useInsertOrder() {
+  const queryClient = useQueryClient();
+  const { session } = useAuth();
+  const userId = session?.user.id;
 
-  console.log(thongke);
-  console.log(thongke.length);
+  return useMutation({
+    async mutationFn(data) {
+      const { error, data: newProduct } = await supabase
+        .from("orders")
+        .insert({
+          ...data,
+          user_id: userId,
+        })
+        .select()
+        .single();
 
-  const {
-    data: orders,
-    isLoading2,
-    error2,
-  } = useAdminOrderList({ archived: true });
+      if (error) {
+        throw new Error(error.message);
+      }
+      return newProduct;
+    },
 
-  const handleThongKe = () => {
-    setDays(Number(numDays) || 7);
+    // cập nhật lại danh sách
+
+    async onSuccess() {
+      await queryClient.invalidateQueries(["orders"]);
+    },
+  });
+}
+
+const CartContext = createContext({
+  items: [],
+  addItem: () => {},
+  updateQuantity: () => {},
+  total: 0,
+  checkout: () => {},
+});
+
+const CartProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
+
+  const { mutate: insertOrder } = useInsertOrder();
+  const { mutate: insertOrderItems } = useInsertOrderItems();
+
+  const addItem = (product, size) => {
+    const existingItem = items.find(
+      (item) => item.product === product && item.size === size
+    );
+
+    if (existingItem) {
+      updateQuantity(existingItem.id, 1);
+      return;
+    }
+
+    const newCartItem = {
+      id: randomUUID(),
+      product,
+      product_id: product.id,
+      size,
+      quantity: 1,
+    };
+
+    setItems([newCartItem, ...items]);
   };
 
-  if (isLoading || isLoading2) return <ActivityIndicator />;
+  const updateQuantity = (itemId, amount) => {
+    const updatedItems = items
+      .map((item) =>
+        item.id !== itemId
+          ? item
+          : { ...item, quantity: item.quantity + amount }
+      )
+      .filter((item) => item.quantity > 0);
+    setItems(updatedItems);
+  };
 
-  if (error || error2) {
-    return <Text>Faild to fetch data</Text>;
+  // console.log(items);
+
+  const total = items
+    .reduce((sum, item) => (sum += item.product.price * item.quantity), 0)
+    .toFixed(2);
+
+  function clearCart() {
+    setItems([]);
   }
 
-  const sodon = thongke ? thongke.length : 0;
-  const tongTien = thongke
-    ? thongke.reduce((acc, cur) => acc + cur.total, 0)
-    : 0;
+  function saveOrderItems(order) {
+    const orderItems = items.map((cartItem) => ({
+      order_id: order.id,
+      product_id: cartItem.product_id,
+      quantity: cartItem.quantity,
+      size: cartItem.size,
+    }));
+
+    insertOrderItems(orderItems, {
+      onSuccess() {
+        clearCart();
+        // router.push(`/(user)/order/${order.id}`);
+        router.push(`/(user)/order`);
+      },
+    });
+  }
+
+  function checkout() {
+    insertOrder(
+      { total },
+      {
+        onSuccess: saveOrderItems,
+      }
+    );
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ marginLeft: 10 }}>
-        <Text>so don: {sodon}</Text>
-        <Text>Tong Tien: {formatCurrency(tongTien)}</Text>
-
-        <Text>So don da giao: {orders?.length}</Text>
-        <Text style={{ marginBottom: 20 }}>
-          So don dang co: {thongke?.length - orders?.length}
-        </Text>
-      </View>
-
-      <LineChart2 orders={thongke} numDays={days} />
-      <Text style={styles.label}>So ngay can thong ke: </Text>
-      <TextInput
-        value={numDays}
-        onChangeText={setNumDays}
-        style={styles.input}
-        keyboardType="numeric"
-      />
-      <Button text={"Thong ke"} onPress={handleThongKe} />
-    </View>
+    <CartContext.Provider
+      value={{ items, addItem, updateQuantity, total, checkout }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 };
 
-export default statistical;
+export default CartProvider;
+
+export const useCart = () => useContext(CartContext);

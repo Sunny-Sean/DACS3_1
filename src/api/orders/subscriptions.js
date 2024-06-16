@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export function useInsertOrderSubscription() {
   const queryClient = useQueryClient();
 
-  //  lắng nghe các sự kiện thời gian thực này và cập nhật giao diện người dùng
+  //  lắng nghe các sự kiện thời gian thực và cập nhật giao diện người dùng
   useEffect(() => {
     const ordersSubscription = supabase
       .channel("custom-insert-channel")

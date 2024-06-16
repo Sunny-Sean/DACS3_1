@@ -6,7 +6,6 @@ import { themeColors } from "../../constants/theme2";
 import { useCart } from "../../providers/CartProvider";
 
 export default function DeliveryScreen() {
-  const { checkout } = useCart();
   const router = useRouter();
   return (
     <View style={{ flex: 1, flexGrow: 1, flexBasis: 0 }}>

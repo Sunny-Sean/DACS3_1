@@ -113,7 +113,6 @@ function payment() {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={styles.LinearGradientStyle}
-                  // colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
                   colors={["#89765b", "#cba06cfa"]}
                 >
                   <View style={styles.CreditCardRow}>

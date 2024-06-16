@@ -19,21 +19,15 @@ import RemoteImage from "./RemoteImage";
 
 export default function CartIt({ cartItem }) {
   const { updateQuantity } = useCart();
-  // console.log(cartItem);
   return (
     <View>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        // colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
         colors={["#f5dab5", "#b39c7f"]}
         style={styles.CartItemSingleLinearGradient}
       >
         <View>
-          {/* <Image
-            source={{ uri: cartItem.product.image || defaultPizzaImage }}
-            style={styles.CartItemSingleImage}
-          /> */}
           <RemoteImage
             path={cartItem.product.image}
             fallback={
@@ -52,13 +46,7 @@ export default function CartIt({ cartItem }) {
           </View>
           <View style={styles.CartItemSingleSizeValueContainer}>
             <View style={styles.SizeBox}>
-              <Text
-                style={[
-                  styles.SizeText,
-                  // { fontSize: type === "Pizza" ? 12 : 16 },
-                  { fontSize: 14 },
-                ]}
-              >
+              <Text style={[styles.SizeText, { fontSize: 14 }]}>
                 {cartItem.size}
               </Text>
             </View>

@@ -45,11 +45,11 @@ const ProfileScreen2 = () => {
       setDiaChi(data.username);
       setName(data.avatar_url);
       setError(error);
-      setIsLoading(false); // Set loading sang false sau khi lấy dữ liệu thành công
+      setIsLoading(false);
     } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error); //
-      setError(error); // Cập nhật trạng thái lỗi nếu lấy dữ liệu thất bại
-      setIsLoading(false); // Reset trạng thái tải
+      console.error("Lỗi khi lấy dữ liệu:", error);
+      setError(error);
+      setIsLoading(false);
     }
   };
 
@@ -80,6 +80,7 @@ const ProfileScreen2 = () => {
     if (!validateInput()) {
       return;
     }
+
     updateUser({
       id: id,
       full_name: sdt,
